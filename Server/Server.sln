@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{77A2AC35-266B-47B7-88B6-8ADAE81080DD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{1212775B-E2D1-44FA-9FA5-BD6F99CD7F96}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{EB5BA9F4-E9E6-4055-B659-2973314F71DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{10D86708-E418-4D3F-8D5F-47CA91DD1DC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTalks.Domain", "EasyTalks.Domain\EasyTalks.Domain.csproj", "{0AAB68CF-4745-4A2A-B6CA-F9E7A9F408EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTalk.Application", "EasyTalk.Application\EasyTalk.Application.csproj", "{44F27919-9891-4478-9222-A33DC13F6E33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTalk.Persistence", "EasyTalk.Persistence\EasyTalk.Persistence.csproj", "{4B2957D2-C3AA-4832-A143-78C06CB8BCCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTalk.WebApi", "EasyTalk.WebApi\EasyTalk.WebApi.csproj", "{7572B006-4128-4961-ACC6-E6D475732EAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0AAB68CF-4745-4A2A-B6CA-F9E7A9F408EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AAB68CF-4745-4A2A-B6CA-F9E7A9F408EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AAB68CF-4745-4A2A-B6CA-F9E7A9F408EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AAB68CF-4745-4A2A-B6CA-F9E7A9F408EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F27919-9891-4478-9222-A33DC13F6E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F27919-9891-4478-9222-A33DC13F6E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F27919-9891-4478-9222-A33DC13F6E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F27919-9891-4478-9222-A33DC13F6E33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B2957D2-C3AA-4832-A143-78C06CB8BCCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B2957D2-C3AA-4832-A143-78C06CB8BCCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B2957D2-C3AA-4832-A143-78C06CB8BCCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B2957D2-C3AA-4832-A143-78C06CB8BCCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7572B006-4128-4961-ACC6-E6D475732EAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7572B006-4128-4961-ACC6-E6D475732EAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7572B006-4128-4961-ACC6-E6D475732EAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7572B006-4128-4961-ACC6-E6D475732EAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0AAB68CF-4745-4A2A-B6CA-F9E7A9F408EA} = {77A2AC35-266B-47B7-88B6-8ADAE81080DD}
+		{44F27919-9891-4478-9222-A33DC13F6E33} = {77A2AC35-266B-47B7-88B6-8ADAE81080DD}
+		{4B2957D2-C3AA-4832-A143-78C06CB8BCCE} = {1212775B-E2D1-44FA-9FA5-BD6F99CD7F96}
+		{7572B006-4128-4961-ACC6-E6D475732EAC} = {EB5BA9F4-E9E6-4055-B659-2973314F71DE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3F9F338F-98B1-42F8-B49F-D7E16C5C074E}
+	EndGlobalSection
+EndGlobal
