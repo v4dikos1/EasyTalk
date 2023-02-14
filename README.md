@@ -17,16 +17,21 @@
 <h2> Наша команда </h2>
 
 Шмидт Алина - project manager <br>
-Контактные данные: 
+<ul>
+<li>VK - vk.com/lina1709</li>
+</ul>
 
 Исхаков Вадим - backend разработчик <br>
 <ul>
-<li> VK - vk.com/v4dikos </li>
-<li> Telegram - t.me/v4dikos </li>
+<li>VK - vk.com/v4dikos</li>
+<li>Telegram - t.me/v4dikos</li>
 </ul>
 
 Гуськов Павел - разработчик мобильного приложения <br>
-Контактные данные:
-
+<ul>
+<li>VK - vk.com/we10nltough</li>
+<ul>
 Михайлов Игорь - дизайнер <br>
-Контактные данные:
+<ul>
+<li>VK - vk.com/mikhailov_design</li>
+</ul>
