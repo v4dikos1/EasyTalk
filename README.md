@@ -30,7 +30,7 @@
 Гуськов Павел - разработчик мобильного приложения <br>
 <ul>
 <li>VK - vk.com/we10nltough</li>
-<ul>
+</ul>
 Михайлов Игорь - дизайнер <br>
 <ul>
 <li>VK - vk.com/mikhailov_design</li>
