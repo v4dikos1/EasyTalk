@@ -1,4 +1,6 @@
-﻿namespace EasyTalks.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EasyTalks.Domain.Entities
 {
     /// <summary>
     /// Аватарка пользователя

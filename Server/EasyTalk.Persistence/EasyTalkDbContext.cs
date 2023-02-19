@@ -18,7 +18,7 @@ namespace EasyTalk.Persistence
 
         public EasyTalkDbContext(DbContextOptions<EasyTalkDbContext> options) : base(options)
         {
-
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,7 +32,7 @@ namespace EasyTalk.Persistence
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
 
-
+            
         }
     }
 }
