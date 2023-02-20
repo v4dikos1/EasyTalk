@@ -2,6 +2,11 @@ using EasyTalk.Application;
 using EasyTalk.Application.Common.Mappings;
 using EasyTalk.Application.Interfaces;
 using EasyTalk.Persistence;
+using EasyTalk.WebApi;
+using EasyTalk.WebApi.Middleware;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +14,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+});
+
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddApiVersioning();
 
 builder.Services.AddAutoMapper(config =>
 {
@@ -34,12 +49,24 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-
+var provider = app.Services.GetService<IApiVersionDescriptionProvider>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(config =>
+    {
+        foreach (var description in provider!.ApiVersionDescriptions)
+        {
+            config.SwaggerEndpoint(
+                $"/swagger/{description.GroupName}/swagger.json",
+                description.GroupName.ToUpperInvariant());
+
+            config.RoutePrefix = String.Empty;
+        }
+    });
 }
+
+app.UseCustomExceptionHandler();
 
 app.UseHttpsRedirection();
 
@@ -51,6 +78,8 @@ app.UseCors("AllowAll");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseApiVersioning();
 
 app.MapControllers();
 

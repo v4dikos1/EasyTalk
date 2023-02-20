@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace EasyTalk.WebApi.Controllers
 {
     [ApiController]
-    [Route("api/languages")]
+    [Route("api/{version:apiVersion}/languages")]
+    [Produces("application/json")]
     public class LanguageController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -26,10 +27,20 @@ namespace EasyTalk.WebApi.Controllers
         /// <summary>
         /// Получение всех языков
         /// </summary>
-        /// <param name="offset"></param>
-        /// <param name="limit"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Пример запроса: 
+        /// GET /api/{apiVersion}/languages?offset=0&amp;limit=2
+        /// </remarks>
+        /// <param name="offset">Смещение</param>
+        /// <param name="limit">Лимит</param>
+        /// <returns>Возвращает список всех языков по заданным смещению и лимиту</returns>
+        /// <response code="200">Выполнено успешно</response>
+        /// <response code="401">Пользователь не авторизован</response>
+        /// <response code="400">Ошибки валидации</response>
         [HttpGet]
+        [ProducesResponseType(typeof(LanguageListVm), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<LanguageListVm>> GetAll(int offset, int limit)
         {
             var query = new GetLanguagesListQuery
@@ -46,9 +57,19 @@ namespace EasyTalk.WebApi.Controllers
         /// <summary>
         /// Получение языка
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Пример запроса:
+        /// GET /api/v1/languages/aa242kksf-sfkmfsm5345-43k345353-m3m533
+        /// </remarks>
+        /// <param name="id">id языка</param>
+        /// <returns>Возвращает информацию о языке (id, name)</returns>
+        /// <response code="200">Выполнено успешно</response>
+        /// <response code="401">Пользователь не авторизован</response>
+        /// <response code="400">Ошибки валидации</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(LanguageDetailsVm), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<LanguageDetailsVm>> GetLanguage(Guid id)
         {
             var query = new GetLanguageDetailsQuery
