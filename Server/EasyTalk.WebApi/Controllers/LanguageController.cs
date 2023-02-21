@@ -37,7 +37,7 @@ namespace EasyTalk.WebApi.Controllers
         /// <response code="200">Выполнено успешно</response>
         /// <response code="401">Пользователь не авторизован</response>
         /// <response code="400">Ошибки валидации</response>
-        [HttpGet]
+        [HttpGet("{offset}/{limit}")]
         [ProducesResponseType(typeof(LanguageListVm), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -59,7 +59,7 @@ namespace EasyTalk.WebApi.Controllers
         /// </summary>
         /// <remarks>
         /// Пример запроса:
-        /// GET /api/v1/languages/aa242kksf-sfkmfsm5345-43k345353-m3m533
+        /// GET /api/1.0/languages/aa242kksf-sfkmfsm5345-43k345353-m3m533
         /// </remarks>
         /// <param name="id">id языка</param>
         /// <returns>Возвращает информацию о языке (id, name)</returns>
@@ -86,7 +86,7 @@ namespace EasyTalk.WebApi.Controllers
         /// </summary>
         /// <remarks>
         /// Пример запроса:
-        /// POST /api/v1/languages
+        /// POST /api/1.0/languages
         /// {
         ///     "Name": "Русский"
         /// }
@@ -114,7 +114,7 @@ namespace EasyTalk.WebApi.Controllers
         /// </summary>
         /// <remarks>
         /// Пример запроса:
-        /// DELETE /api/v1/languages?id=115km5k1-kmkm1515-m51k515m15-51m1msf
+        /// DELETE /api/1.0/languages?id=115km5k1-kmkm1515-m51k515m15-51m1msf
         /// </remarks>
         /// <param name="id">id удаляемого языка</param>
         /// <returns>Возвращает пустой ответ</returns>
@@ -142,7 +142,7 @@ namespace EasyTalk.WebApi.Controllers
         /// </summary>
         /// <remarks>
         /// Пример запроса:
-        /// PUT /api/v1/languages
+        /// PUT /api/1.0/languages
         /// {
         ///     "Id" : "41k41-511k51jfs-16363mxfs-52n52jkmf",
         ///     "NewName" : "Английский"
