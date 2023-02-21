@@ -41,6 +41,8 @@ namespace EasyTalk.WebApi.Middleware
                 case NotFoundException:
                     code = HttpStatusCode.NotFound;
                     break;
+
+                
             }
 
             context.Response.ContentType = "application/json";
