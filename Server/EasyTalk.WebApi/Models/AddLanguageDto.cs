@@ -6,6 +6,9 @@ namespace EasyTalk.WebApi.Models
 {
     public class AddLanguageDto : IMapWith<CreateLanguageCommand>
     {
+        /// <summary>
+        /// Название добавляемого языка
+        /// </summary>
         public string Name { get; set; } = String.Empty;
 
         public void Mapping(Profile profile)

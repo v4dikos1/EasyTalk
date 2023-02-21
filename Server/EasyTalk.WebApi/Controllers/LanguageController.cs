@@ -69,7 +69,6 @@ namespace EasyTalk.WebApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(LanguageDetailsVm), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<LanguageDetailsVm>> GetLanguage(Guid id)
         {
             var query = new GetLanguageDetailsQuery
@@ -85,9 +84,22 @@ namespace EasyTalk.WebApi.Controllers
         /// <summary>
         /// Добавление языка
         /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Пример запроса:
+        /// POST /api/v1/languages
+        /// {
+        ///     "Name": "Русский"
+        /// }
+        /// </remarks>
+        /// <param name="request">Название языка</param>
+        /// <returns>Возвращает id (guid) созданного языка</returns>
+        /// <response code="200">Выполнено успешно</response>
+        /// <response code="401">Пользователь не авторизован</response>
+        /// <response code="400">Ошибки валидации</response>
         [HttpPost]
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<Guid>> AddLanguage([FromBody] AddLanguageDto request)
         {
             var command = _mapper.Map<CreateLanguageCommand>(request);
@@ -100,9 +112,19 @@ namespace EasyTalk.WebApi.Controllers
         /// <summary>
         /// Удаление языка
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Пример запроса:
+        /// DELETE /api/v1/languages?id=115km5k1-kmkm1515-m51k515m15-51m1msf
+        /// </remarks>
+        /// <param name="id">id удаляемого языка</param>
+        /// <returns>Возвращает пустой ответ</returns>
+        /// <response code="204">Выполнено успешно</response>
+        /// <response code="401">Пользователь не авторизован</response>
+        /// <response code="400">Ошибки валидации</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(Unit), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<Unit>> DeleteLanguage(Guid id)
         {
             var command = new DeleteLanguageCommand
@@ -118,10 +140,24 @@ namespace EasyTalk.WebApi.Controllers
         /// <summary>
         /// Обновление языка
         /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Пример запроса:
+        /// PUT /api/v1/languages
+        /// {
+        ///     "Id" : "41k41-511k51jfs-16363mxfs-52n52jkmf",
+        ///     "NewName" : "Английский"
+        /// }
+        /// </remarks>
+        /// <param name="request">Id имзеняемого языка, новое название</param>
+        /// <returns>Вовзращает пустой ответ</returns>
+        /// <response code="204">Выполнено успешно</response>
+        /// <response code="401">Пользователь не авторизован</response>
+        /// <response code="400">Ошибки валидации</response>
         [HttpPut]
-        public async Task<ActionResult<Unit>> UpdateLanguage(UpdateLanguageDto request)
+        [ProducesResponseType(typeof(Unit), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<Unit>> UpdateLanguage([FromBody] UpdateLanguageDto request)
         {
             var command = _mapper.Map<UpdateLanguageCommand>(request);
 
