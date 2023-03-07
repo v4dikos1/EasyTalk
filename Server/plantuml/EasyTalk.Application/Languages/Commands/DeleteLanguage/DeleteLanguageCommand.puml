@@ -1,0 +1,6 @@
+@startuml
+class DeleteLanguageCommand {
+}
+IRequest <|-- DeleteLanguageCommand
+DeleteLanguageCommand --> "Id" Guid
+@enduml

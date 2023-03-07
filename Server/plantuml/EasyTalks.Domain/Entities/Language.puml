@@ -1,0 +1,9 @@
+@startuml
+class Language {
+    + Name : string <<get>> <<set>>
+}
+class "List`1"<T> {
+}
+Language --> "Id" Guid
+Language o-> "Users<User>" "List`1"
+@enduml

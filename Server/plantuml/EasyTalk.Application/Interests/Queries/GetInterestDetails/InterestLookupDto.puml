@@ -1,0 +1,10 @@
+@startuml
+class InterestLookupDto {
+    + Name : string <<get>> <<set>>
+    + Mapping(profile:Profile) : void
+}
+class "IMapWith`1"<T> {
+}
+"IMapWith`1" "<Interest>" <|-- InterestLookupDto
+InterestLookupDto --> "Id" Guid
+@enduml

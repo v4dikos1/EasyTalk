@@ -28,7 +28,7 @@ namespace EasyTalks.Domain.Entities
         /// <summary>
         /// Информация о пользователе
         /// </summary>
-        public string Info { get; set; } = string.Empty;
+        public string? Info { get; set; }
 
         /// <summary>
         /// Логин
@@ -55,7 +55,7 @@ namespace EasyTalks.Domain.Entities
         /// Родной язык
         /// </summary>
         public Guid NativeLanguageId { get; set; }
-        public Language NativeLanguage { get; set; } = null!;
+        public Language? NativeLanguage { get; set; }
 
         /// <summary>
         /// Изучаемые языки
@@ -71,13 +71,13 @@ namespace EasyTalks.Domain.Entities
         /// Роль
         /// </summary>
         public Guid RoleId { get; set; }
-        public Role Role { get; set; } = null!;
+        public Role? Role { get; set; }
 
         /// <summary>
         /// Аватарка
         /// </summary>
         public Guid PictureId { get; set; }
-        public Picture Picture { get; set; } = null!;
+        public Picture? Picture { get; set; }
 
         /// <summary>
         /// Диалоги, в которых участвует пользователь

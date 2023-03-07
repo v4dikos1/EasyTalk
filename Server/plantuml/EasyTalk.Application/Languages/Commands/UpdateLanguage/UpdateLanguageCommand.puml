@@ -1,0 +1,7 @@
+@startuml
+class UpdateLanguageCommand {
+    + NewName : string <<get>> <<set>>
+}
+IRequest <|-- UpdateLanguageCommand
+UpdateLanguageCommand --> "Id" Guid
+@enduml

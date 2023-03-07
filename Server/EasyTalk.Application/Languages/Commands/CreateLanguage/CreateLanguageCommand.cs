@@ -7,6 +7,6 @@ namespace EasyTalk.Application.Languages.Commands.CreateLanguage
         /// <summary>
         /// Название создаваемого языка
         /// </summary>
-        public string Name { get; set; } = String.Empty;
+        public string Name { get; set; } = string.Empty;
     }
 }

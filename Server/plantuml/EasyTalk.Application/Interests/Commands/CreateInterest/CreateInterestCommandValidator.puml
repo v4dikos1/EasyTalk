@@ -1,0 +1,8 @@
+@startuml
+class CreateInterestCommandValidator {
+    + CreateInterestCommandValidator()
+}
+class "AbstractValidator`1"<T> {
+}
+"AbstractValidator`1" "<CreateInterestCommand>" <|-- CreateInterestCommandValidator
+@enduml

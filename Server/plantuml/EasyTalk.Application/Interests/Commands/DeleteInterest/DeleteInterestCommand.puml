@@ -1,0 +1,6 @@
+@startuml
+class DeleteInterestCommand {
+}
+IRequest <|-- DeleteInterestCommand
+DeleteInterestCommand --> "Id" Guid
+@enduml

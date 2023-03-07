@@ -1,0 +1,7 @@
+@startuml
+class LanguageListVm {
+}
+class "IList`1"<T> {
+}
+LanguageListVm o-> "Languages<LanguageLookupDto>" "IList`1"
+@enduml

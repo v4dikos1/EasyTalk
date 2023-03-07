@@ -1,0 +1,8 @@
+@startuml
+class InterestConfiguration {
+    + Configure(builder:EntityTypeBuilder<Interest>) : void
+}
+class "IEntityTypeConfiguration`1"<T> {
+}
+"IEntityTypeConfiguration`1" "<Interest>" <|-- InterestConfiguration
+@enduml

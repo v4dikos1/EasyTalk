@@ -1,0 +1,9 @@
+@startuml
+class CreateLanguageCommandHandler {
+    + CreateLanguageCommandHandler(context:IEasyTalkDbContext)
+    + <<async>> Handle(request:CreateLanguageCommand, cancellationToken:CancellationToken) : Task<Guid>
+}
+class "IRequestHandler`2"<T1,T2> {
+}
+"IRequestHandler`2" "<CreateLanguageCommand,Guid>" <|-- CreateLanguageCommandHandler
+@enduml

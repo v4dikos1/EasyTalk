@@ -1,0 +1,7 @@
+@startuml
+class UpdateInterestCommand {
+    + NewName : string <<get>> <<set>>
+}
+IRequest <|-- UpdateInterestCommand
+UpdateInterestCommand --> "Id" Guid
+@enduml

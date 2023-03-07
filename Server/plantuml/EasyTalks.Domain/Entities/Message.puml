@@ -1,0 +1,15 @@
+@startuml
+class Message {
+    + Content : string? <<get>> <<set>>
+}
+class "List`1"<T> {
+}
+Message --> "Id" Guid
+Message --> "Date" DateTime
+Message --> "IsRead" Boolean
+Message --> "SenderId" Guid
+Message o-> "Sender" User
+Message --> "ReceiverId" Guid
+Message o-> "Receivers<User>" "List`1"
+Message o-> "Attachments<Attachment>" "List`1"
+@enduml

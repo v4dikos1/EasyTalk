@@ -3,6 +3,8 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using EasyTalk.Application.Common.Services;
+using EasyTalk.Application.Interfaces;
 
 namespace EasyTalk.Application
 {
@@ -16,6 +18,9 @@ namespace EasyTalk.Application
 
             services.AddValidatorsFromAssemblies(new[] {Assembly.GetExecutingAssembly()});
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+            services.AddSingleton<IPasswordService, IPasswordService>();
+            services.AddSingleton<ITokenService, TokenService>();
 
             return services;
         }

@@ -1,0 +1,8 @@
+@startuml
+class GetLanguageDetailsQueryValidator {
+    + GetLanguageDetailsQueryValidator()
+}
+class "AbstractValidator`1"<T> {
+}
+"AbstractValidator`1" "<GetLanguageDetailsQuery>" <|-- GetLanguageDetailsQueryValidator
+@enduml

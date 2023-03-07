@@ -1,0 +1,8 @@
+@startuml
+class GetInterestDetailQueryValidator {
+    + GetInterestDetailQueryValidator()
+}
+class "AbstractValidator`1"<T> {
+}
+"AbstractValidator`1" "<GetInterestDetailQuery>" <|-- GetInterestDetailQueryValidator
+@enduml

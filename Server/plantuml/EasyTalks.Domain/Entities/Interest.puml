@@ -1,0 +1,9 @@
+@startuml
+class Interest {
+    + Name : string <<get>> <<set>>
+}
+class "List`1"<T> {
+}
+Interest --> "Id" Guid
+Interest o-> "Users<User>" "List`1"
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class GetInterestsListQuery {
+    + Limit : int <<get>> <<set>>
+    + Offset : int <<get>> <<set>>
+}
+class "IRequest`1"<T> {
+}
+"IRequest`1" "<InterestsListViewModel>" <|-- GetInterestsListQuery
+@enduml

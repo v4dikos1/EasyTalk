@@ -22,5 +22,10 @@
         /// </summary>
         public Guid MessageId { get; set; }
         public Message Message { get; set; } = null!;
+
+        public void Method()
+        {
+
+        }
     }
 }

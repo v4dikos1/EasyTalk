@@ -1,0 +1,9 @@
+@startuml
+class CreateInterestDto {
+    + Name : string <<get>> <<set>>
+    + Mapping(profile:Profile) : void
+}
+class "IMapWith`1"<T> {
+}
+"IMapWith`1" "<CreateInterestCommand>" <|-- CreateInterestDto
+@enduml

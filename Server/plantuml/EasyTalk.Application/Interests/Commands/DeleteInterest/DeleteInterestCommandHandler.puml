@@ -1,0 +1,9 @@
+@startuml
+class DeleteInterestCommandHandler {
+    + DeleteInterestCommandHandler(dbContext:IEasyTalkDbContext)
+    + <<async>> Handle(request:DeleteInterestCommand, cancellationToken:CancellationToken) : Task
+}
+class "IRequestHandler`1"<T> {
+}
+"IRequestHandler`1" "<DeleteInterestCommand>" <|-- DeleteInterestCommandHandler
+@enduml

@@ -64,6 +64,8 @@ if (app.Environment.IsDevelopment())
             config.RoutePrefix = String.Empty;
         }
     });
+
+   
 }
 
 app.UseCustomExceptionHandler();
@@ -75,6 +77,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseCors("AllowAll");
+
+app.AddEfDiagrams<EasyTalkDbContext>();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -42,13 +42,16 @@ namespace EasyTalk.WebApi.Middleware
                     code = HttpStatusCode.NotFound;
                     break;
 
-                
+                case AlreadyExistsException:
+                    code = HttpStatusCode.Conflict;
+                    break;
+
             }
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
 
-            if (result == String.Empty)
+            if (result == string.Empty)
             {
                 result = JsonSerializer.Serialize(new {error = exception.Message});
             }

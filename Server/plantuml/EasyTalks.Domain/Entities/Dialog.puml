@@ -1,0 +1,9 @@
+@startuml
+class Dialog {
+    + Title : string <<get>> <<set>>
+}
+class "List`1"<T> {
+}
+Dialog --> "Id" Guid
+Dialog o-> "Users<User>" "List`1"
+@enduml

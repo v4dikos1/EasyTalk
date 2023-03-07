@@ -1,0 +1,9 @@
+@startuml
+class UpdateInteresCommandHandler {
+    + UpdateInteresCommandHandler(dbContext:IEasyTalkDbContext)
+    + <<async>> Handle(request:UpdateInterestCommand, cancellationToken:CancellationToken) : Task
+}
+class "IRequestHandler`1"<T> {
+}
+"IRequestHandler`1" "<UpdateInterestCommand>" <|-- UpdateInteresCommandHandler
+@enduml

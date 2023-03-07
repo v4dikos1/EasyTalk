@@ -1,0 +1,10 @@
+@startuml
+class UpdateLanguageDto {
+    + NewName : string <<get>> <<set>>
+    + Mapping(profile:Profile) : void
+}
+class "IMapWith`1"<T> {
+}
+"IMapWith`1" "<UpdateLanguageCommand>" <|-- UpdateLanguageDto
+UpdateLanguageDto --> "Id" Guid
+@enduml

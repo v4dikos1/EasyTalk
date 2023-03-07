@@ -1,0 +1,9 @@
+@startuml
+class GetInterestsListQueryHandler {
+    + GetInterestsListQueryHandler(dbContext:IEasyTalkDbContext, mapper:IMapper)
+    + <<async>> Handle(request:GetInterestsListQuery, cancellationToken:CancellationToken) : Task<InterestsListViewModel>
+}
+class "IRequestHandler`2"<T1,T2> {
+}
+"IRequestHandler`2" "<GetInterestsListQuery,InterestsListViewModel>" <|-- GetInterestsListQueryHandler
+@enduml
