@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using EasyTalk.Application.Languages.Queries.GetLanguagesList;
 using EasyTalk.Application.Users.Commands.Registration;
 using EasyTalk.WebApi.Models.User;
 using MediatR;
@@ -48,19 +47,6 @@ namespace EasyTalk.WebApi.Controllers
         public async Task<ActionResult> CreateUser([FromForm]UserRegistrationDto request)
         {
             var command = _mapper.Map<RegistrationCommand>(request);
-
-            //var command = new RegistrationCommand
-            //{
-            //    Username = request.Username,
-            //    Email = request.Email,
-            //    PhoneNumber = request.PhoneNumber,
-            //    Password = request.Password,
-            //    NativeLanguageId = request.NativeLanguageId,
-            //    TargetLanguages = request.TargetLanguages,
-            //    Interests = request.Interests,
-            //    RoleId = request.RoleId,
-            //    File = file
-            //};
 
             await _mediator.Send(command);
 
