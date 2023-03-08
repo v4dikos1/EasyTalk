@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <NoWarn>$(NoWarn);1591</NoWarn>
+	  <UserSecretsId>f6f3a750-596d-4e42-bd2d-884220ef1ab8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Common\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 	

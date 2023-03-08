@@ -1,9 +1,0 @@
-@startuml
-class DeleteLanguageCommandHandler {
-    + DeleteLanguageCommandHandler(context:IEasyTalkDbContext)
-    + <<async>> Handle(request:DeleteLanguageCommand, cancellationToken:CancellationToken) : Task
-}
-class "IRequestHandler`1"<T> {
-}
-"IRequestHandler`1" "<DeleteLanguageCommand>" <|-- DeleteLanguageCommandHandler
-@enduml

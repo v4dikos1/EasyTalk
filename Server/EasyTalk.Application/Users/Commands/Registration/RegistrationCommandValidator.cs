@@ -6,14 +6,6 @@ namespace EasyTalk.Application.Users.Commands.Registration
     {
         public RegistrationCommandValidator()
         {
-            RuleFor(u => u.Firstname)
-                .NotEmpty()
-                .WithMessage("Firstname is required!");
-
-            RuleFor(u => u.Lastname)
-                .NotEmpty()
-                .WithMessage("Lastname is required!");
-
             RuleFor(u => u.Email)
                 .NotEmpty().WithMessage("Email is required!")
                 .EmailAddress().WithMessage("Invalid Email!");
@@ -41,10 +33,6 @@ namespace EasyTalk.Application.Users.Commands.Registration
             RuleFor(u => u.Interests)
                 .NotEmpty()
                 .WithMessage("Interests are required!");
-
-            RuleFor(u => u.PictureId)
-                .NotEmpty()
-                .WithMessage("Picture is required!");
         }
     }
 }

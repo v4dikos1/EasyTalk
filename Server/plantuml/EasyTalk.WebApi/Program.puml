@@ -1,8 +1,0 @@
-@startuml
-class "AddTransient`2"<T1,T2> {
-}
-class "GetService`1"<T> {
-}
-class "AddEfDiagrams`1"<T> {
-}
-@enduml

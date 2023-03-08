@@ -1,9 +1,0 @@
-@startuml
-class CreateInterestCommandHandler {
-    + CreateInterestCommandHandler(dbContext:IEasyTalkDbContext)
-    + <<async>> Handle(request:CreateInterestCommand, cancellationToken:CancellationToken) : Task<Guid>
-}
-class "IRequestHandler`2"<T1,T2> {
-}
-"IRequestHandler`2" "<CreateInterestCommand,Guid>" <|-- CreateInterestCommandHandler
-@enduml

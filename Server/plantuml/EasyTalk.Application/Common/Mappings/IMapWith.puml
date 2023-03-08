@@ -1,5 +1,0 @@
-@startuml
-interface "IMapWith`1"<T> {
-    Mapping(profile:Profile) : void
-}
-@enduml

@@ -1,9 +1,0 @@
-@startuml
-class Role {
-    + Name : string <<get>> <<set>>
-}
-class "List`1"<T> {
-}
-Role --> "Id" Guid
-Role o-> "Users<User>" "List`1"
-@enduml

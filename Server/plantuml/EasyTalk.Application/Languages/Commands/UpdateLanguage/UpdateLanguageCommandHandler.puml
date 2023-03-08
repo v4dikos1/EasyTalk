@@ -1,9 +1,0 @@
-@startuml
-class UpdateLanguageCommandHandler {
-    + UpdateLanguageCommandHandler(context:IEasyTalkDbContext)
-    + <<async>> Handle(request:UpdateLanguageCommand, cancellationToken:CancellationToken) : Task
-}
-class "IRequestHandler`1"<T> {
-}
-"IRequestHandler`1" "<UpdateLanguageCommand>" <|-- UpdateLanguageCommandHandler
-@enduml

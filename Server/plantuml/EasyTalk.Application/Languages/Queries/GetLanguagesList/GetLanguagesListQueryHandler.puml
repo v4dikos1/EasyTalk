@@ -1,9 +1,0 @@
-@startuml
-class GetLanguagesListQueryHandler {
-    + GetLanguagesListQueryHandler(context:IEasyTalkDbContext, mapper:IMapper)
-    + <<async>> Handle(request:GetLanguagesListQuery, cancellationToken:CancellationToken) : Task<LanguageListVm>
-}
-class "IRequestHandler`2"<T1,T2> {
-}
-"IRequestHandler`2" "<GetLanguagesListQuery,LanguageListVm>" <|-- GetLanguagesListQueryHandler
-@enduml

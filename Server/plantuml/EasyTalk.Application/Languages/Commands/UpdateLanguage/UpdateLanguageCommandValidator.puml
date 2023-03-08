@@ -1,8 +1,0 @@
-@startuml
-class UpdateLanguageCommandValidator {
-    + UpdateLanguageCommandValidator()
-}
-class "AbstractValidator`1"<T> {
-}
-"AbstractValidator`1" "<UpdateLanguageCommand>" <|-- UpdateLanguageCommandValidator
-@enduml

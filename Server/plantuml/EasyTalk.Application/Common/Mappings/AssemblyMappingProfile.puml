@@ -1,6 +1,0 @@
-@startuml
-class AssemblyMappingProfile {
-    + AssemblyMappingProfile(assembly:Assembly)
-}
-Profile <|-- AssemblyMappingProfile
-@enduml

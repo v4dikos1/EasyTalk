@@ -1,5 +1,0 @@
-@startuml
-class DependencyInjection <<static>> {
-    + {static} AddPersistence(services:IServiceCollection, configuration:IConfiguration) : IServiceCollection
-}
-@enduml

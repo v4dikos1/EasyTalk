@@ -1,7 +1,0 @@
-@startuml
-class InterestsListViewModel {
-}
-class "IList`1"<T> {
-}
-InterestsListViewModel o-> "Interests<InterestLookupDto>" "IList`1"
-@enduml

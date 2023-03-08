@@ -1,8 +1,0 @@
-@startuml
-class PictureConfiguration {
-    + Configure(builder:EntityTypeBuilder<Picture>) : void
-}
-class "IEntityTypeConfiguration`1"<T> {
-}
-"IEntityTypeConfiguration`1" "<Picture>" <|-- PictureConfiguration
-@enduml

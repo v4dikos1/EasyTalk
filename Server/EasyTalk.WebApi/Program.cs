@@ -78,8 +78,6 @@ app.UseRouting();
 
 app.UseCors("AllowAll");
 
-app.AddEfDiagrams<EasyTalkDbContext>();
-
 app.UseAuthentication();
 app.UseAuthorization();
 

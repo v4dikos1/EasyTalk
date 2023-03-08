@@ -1,8 +1,0 @@
-@startuml
-class Picture {
-    + Path : string <<get>> <<set>>
-}
-Picture --> "Id" Guid
-Picture --> "UserId" Guid
-Picture o-> "User" User
-@enduml

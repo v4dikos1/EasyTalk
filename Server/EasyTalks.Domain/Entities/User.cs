@@ -11,26 +11,6 @@ namespace EasyTalks.Domain.Entities
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Имя
-        /// </summary>
-        public string Firstname { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Фамилия
-        /// </summary>
-        public string Lastname { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Отчество
-        /// </summary>
-        public string? Patronymic { get; set; }
-
-        /// <summary>
-        /// Информация о пользователе
-        /// </summary>
-        public string? Info { get; set; }
-
-        /// <summary>
         /// Логин
         /// </summary>
         public string Username { get; set; } = string.Empty; 
@@ -43,7 +23,7 @@ namespace EasyTalks.Domain.Entities
         /// <summary>
         /// Номер телефона
         /// </summary>
-        public string PhoneNumber { get; set; } = string.Empty;
+        public string? PhoneNumber { get; set; }
 
         /// <summary>
         /// Пароль
@@ -76,7 +56,7 @@ namespace EasyTalks.Domain.Entities
         /// <summary>
         /// Аватарка
         /// </summary>
-        public Guid PictureId { get; set; }
+        public Guid? PictureId { get; set; }
         public Picture? Picture { get; set; }
 
         /// <summary>

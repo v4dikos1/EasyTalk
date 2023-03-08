@@ -1,10 +1,9 @@
-﻿using System.Threading.Tasks;
-using EasyTalk.Application.Common.Exceptions;
+﻿using EasyTalk.Application.Common.Exceptions;
 using EasyTalk.Application.Interfaces;
+using EasyTalk.Application.Pictures.Commands.AddPicture;
 using EasyTalks.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 namespace EasyTalk.Application.Users.Commands.Registration
 {
@@ -12,12 +11,14 @@ namespace EasyTalk.Application.Users.Commands.Registration
     {
         private readonly IPasswordService _passwordService;
         private readonly IEasyTalkDbContext _dbContext;
+        private readonly IMediator _mediator;
         private const string UserRoleId = "41f6f9c9-7ebf-4122-97f4-6d04e3eef312";
 
-        public RegistrationCommandHandler(IPasswordService passwordService, IEasyTalkDbContext dbContext)
+        public RegistrationCommandHandler(IPasswordService passwordService, IEasyTalkDbContext dbContext, IMediator mediator)
         {
             _passwordService = passwordService;
             _dbContext = dbContext;
+            _mediator = mediator;
         }
 
         public async Task Handle(RegistrationCommand request, CancellationToken cancellationToken)
@@ -63,7 +64,8 @@ namespace EasyTalk.Application.Users.Commands.Registration
                 throw new AlreadyExistsException(nameof(User), request.Email);
             }
 
-            if (await _dbContext.Users.FirstOrDefaultAsync(u => u.PhoneNumber.Equals(request.PhoneNumber), cancellationToken) != null)
+            if (request.PhoneNumber != null && 
+                await _dbContext.Users.FirstOrDefaultAsync(u => u.PhoneNumber.Equals(request.PhoneNumber), cancellationToken) != null)
             {
                 throw new AlreadyExistsException(nameof(User), request.PhoneNumber);
             }
@@ -81,21 +83,23 @@ namespace EasyTalk.Application.Users.Commands.Registration
                 Username = request.Username,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
-                Firstname = request.Firstname,
-                Lastname = request.Lastname,
-                Patronymic = request.Patronymic,
-                Info = request.Info,
                 NativeLanguageId = request.NativeLanguageId,
                 TargetLanguages = targetLanguages,
                 Interests = interests,
                 RoleId = request.RoleId ?? Guid.Parse(UserRoleId),
-                PictureId = request.PictureId,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             };
 
             await _dbContext.Users.AddAsync(user, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
+
+            var pictureId = await _mediator.Send(new AddPictureCommand { UserId = user.Id, File = request.File }, cancellationToken);
+
+            user.PictureId = pictureId;
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
         }
     }
 }

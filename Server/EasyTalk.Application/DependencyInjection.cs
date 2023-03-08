@@ -19,7 +19,7 @@ namespace EasyTalk.Application
             services.AddValidatorsFromAssemblies(new[] {Assembly.GetExecutingAssembly()});
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
-            services.AddSingleton<IPasswordService, IPasswordService>();
+            services.AddSingleton<IPasswordService, PasswordService>();
             services.AddSingleton<ITokenService, TokenService>();
 
             return services;

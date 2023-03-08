@@ -1,6 +1,0 @@
-@startuml
-class NotFoundException {
-    + NotFoundException(name:string, key:object)
-}
-Exception <|-- NotFoundException
-@enduml

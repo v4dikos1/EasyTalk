@@ -1,8 +1,0 @@
-@startuml
-class AttachmentConfiguration {
-    + Configure(builder:EntityTypeBuilder<Attachment>) : void
-}
-class "IEntityTypeConfiguration`1"<T> {
-}
-"IEntityTypeConfiguration`1" "<Attachment>" <|-- AttachmentConfiguration
-@enduml

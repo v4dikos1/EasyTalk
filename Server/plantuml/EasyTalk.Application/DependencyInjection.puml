@@ -1,5 +1,0 @@
-@startuml
-class DependencyInjection <<static>> {
-    + {static} AddApplication(services:IServiceCollection) : IServiceCollection
-}
-@enduml

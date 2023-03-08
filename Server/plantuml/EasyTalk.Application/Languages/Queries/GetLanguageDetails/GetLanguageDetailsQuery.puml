@@ -1,8 +1,0 @@
-@startuml
-class GetLanguageDetailsQuery {
-}
-class "IRequest`1"<T> {
-}
-"IRequest`1" "<LanguageDetailsVm>" <|-- GetLanguageDetailsQuery
-GetLanguageDetailsQuery --> "Id" Guid
-@enduml

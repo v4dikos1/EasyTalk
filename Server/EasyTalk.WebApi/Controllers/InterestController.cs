@@ -4,6 +4,7 @@ using EasyTalk.Application.Interests.Commands.DeleteInterest;
 using EasyTalk.Application.Interests.Commands.UpdateInterest;
 using EasyTalk.Application.Interests.Queries.GetInterestDetails;
 using EasyTalk.Application.Interests.Queries.GetInterestsList;
+using EasyTalk.Application.Pictures.Commands.AddPicture;
 using EasyTalk.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

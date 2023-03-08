@@ -1,5 +1,0 @@
-@startuml
-class CustomExceptionHandlerMiddlewareExtensions <<static>> {
-    + {static} UseCustomExceptionHandler(applicationBuilder:IApplicationBuilder) : IApplicationBuilder
-}
-@enduml

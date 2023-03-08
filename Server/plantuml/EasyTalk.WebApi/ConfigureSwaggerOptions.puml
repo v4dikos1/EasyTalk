@@ -1,9 +1,0 @@
-@startuml
-class ConfigureSwaggerOptions {
-    + ConfigureSwaggerOptions(provider:IApiVersionDescriptionProvider)
-    + Configure(options:SwaggerGenOptions) : void
-}
-class "IConfigureOptions`1"<T> {
-}
-"IConfigureOptions`1" "<SwaggerGenOptions>" <|-- ConfigureSwaggerOptions
-@enduml

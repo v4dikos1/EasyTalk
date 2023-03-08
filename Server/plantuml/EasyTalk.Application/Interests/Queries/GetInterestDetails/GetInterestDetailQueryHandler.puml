@@ -1,9 +1,0 @@
-@startuml
-class GetInterestDetailQueryHandler {
-    + GetInterestDetailQueryHandler(dbContext:IEasyTalkDbContext, mapper:IMapper)
-    + <<async>> Handle(request:GetInterestDetailQuery, cancellationToken:CancellationToken) : Task<InterestLookupDto>
-}
-class "IRequestHandler`2"<T1,T2> {
-}
-"IRequestHandler`2" "<GetInterestDetailQuery,InterestLookupDto>" <|-- GetInterestDetailQueryHandler
-@enduml

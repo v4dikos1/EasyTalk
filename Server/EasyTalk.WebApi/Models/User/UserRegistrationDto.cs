@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using EasyTalks.Domain.Entities;
-using MediatR;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using EasyTalk.Application.Common.Mappings;
+using EasyTalk.Application.Users.Commands.Registration;
 
-namespace EasyTalk.Application.Users.Commands.Registration
+namespace EasyTalk.WebApi.Models.User
 {
-    public class RegistrationCommand : IRequest
+    public class UserRegistrationDto : IMapWith<RegistrationCommand>
     {
         /// <summary>
         /// Логин
@@ -20,13 +19,11 @@ namespace EasyTalk.Application.Users.Commands.Registration
         /// <summary>
         /// Номер телефона
         /// </summary>
-        [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone Number")]
-        public string? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
 
         /// <summary>
         /// Пароль
         /// </summary>
-        [DataType(DataType.Password, ErrorMessage = "Invalid Password")]
         public string Password { get; set; } = string.Empty;
 
         /// <summary>
@@ -53,5 +50,10 @@ namespace EasyTalk.Application.Users.Commands.Registration
         /// Аватар
         /// </summary>
         public IFormFile File { get; set; } = null!;
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<UserRegistrationDto, RegistrationCommand>();
+        }
     }
 }

@@ -53,7 +53,7 @@ namespace EasyTalk.WebApi.Middleware
 
             if (result == string.Empty)
             {
-                result = JsonSerializer.Serialize(new {error = exception.Message});
+                result = JsonSerializer.Serialize(new { error = exception.Message });
             }
 
             return context.Response.WriteAsync(result);

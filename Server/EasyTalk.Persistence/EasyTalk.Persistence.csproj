@@ -16,8 +16,4 @@
     <ProjectReference Include="..\EasyTalks.Domain\EasyTalks.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Files\" />
-  </ItemGroup>
-
 </Project>

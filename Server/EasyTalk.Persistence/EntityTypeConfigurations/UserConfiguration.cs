@@ -12,12 +12,6 @@ namespace EasyTalk.Persistence.EntityTypeConfigurations
 
             builder.HasKey(u => u.Id).HasName("UserId");
 
-            builder.Property(u => u.Firstname).IsRequired().HasMaxLength(15);
-            builder.Property(u => u.Lastname).IsRequired().HasMaxLength(20);
-            builder.Property(u => u.Patronymic).HasMaxLength(20);
-
-            builder.Property(u => u.Info).IsRequired().HasMaxLength(150);
-
             builder.Property(u => u.Username).IsRequired().HasMaxLength(20);
             builder.HasIndex(u => u.Username).IsUnique();
 

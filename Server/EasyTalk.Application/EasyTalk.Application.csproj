@@ -11,6 +11,7 @@
     <PackageReference Include="FluentValidation" Version="11.5.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.0" />
     <PackageReference Include="MediatR" Version="12.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
@@ -21,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pictures\Queries\" />
     <Folder Include="Users\Queries\" />
   </ItemGroup>
 

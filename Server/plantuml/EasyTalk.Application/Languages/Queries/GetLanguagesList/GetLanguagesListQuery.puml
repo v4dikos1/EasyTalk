@@ -1,9 +1,0 @@
-@startuml
-class GetLanguagesListQuery {
-    + Offset : int <<get>> <<set>>
-    + Limit : int <<get>> <<set>>
-}
-class "IRequest`1"<T> {
-}
-"IRequest`1" "<LanguageListVm>" <|-- GetLanguagesListQuery
-@enduml

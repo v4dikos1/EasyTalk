@@ -1,8 +1,0 @@
-@startuml
-class RoleConfiguration {
-    + Configure(builder:EntityTypeBuilder<Role>) : void
-}
-class "IEntityTypeConfiguration`1"<T> {
-}
-"IEntityTypeConfiguration`1" "<Role>" <|-- RoleConfiguration
-@enduml

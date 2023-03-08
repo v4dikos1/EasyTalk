@@ -1,6 +1,0 @@
-@startuml
-class CustomExceptionHandlerMiddleware {
-    + CustomExceptionHandlerMiddleware(next:RequestDelegate)
-    + <<async>> Invoke(context:HttpContext) : Task
-}
-@enduml

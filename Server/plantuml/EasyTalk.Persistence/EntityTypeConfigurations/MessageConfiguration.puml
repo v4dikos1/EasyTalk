@@ -1,8 +1,0 @@
-@startuml
-class MessageConfiguration {
-    + Configure(builder:EntityTypeBuilder<Message>) : void
-}
-class "IEntityTypeConfiguration`1"<T> {
-}
-"IEntityTypeConfiguration`1" "<Message>" <|-- MessageConfiguration
-@enduml
