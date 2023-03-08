@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using AutoMapper;
+using EasyTalk.Application.Users.Commands.Auth;
 using EasyTalk.Application.Users.Commands.Registration;
 using EasyTalk.WebApi.Models.User;
 using MediatR;
@@ -36,7 +38,6 @@ namespace EasyTalk.WebApi.Controllers
         /// }
         /// Файл берется из формы
         /// </remarks>
-        /// <param name="file">Аватар</param>
         /// <param name="request">Данные о пользователе</param>
         /// <returns>Возвращает пустой ответ</returns>
         /// <response code="204">Выполнено успешно</response>
@@ -51,6 +52,35 @@ namespace EasyTalk.WebApi.Controllers
             await _mediator.Send(command);
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Аутентификация/Авторизация
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// POST api/1.0/users/user
+        /// {
+        ///     "Login": "v4dikos",
+        ///     "Password": "12345"
+        /// }
+        /// </remarks>
+        /// <param name="request">Логин (почта/юзернейм) и пароль</param>
+        /// <returns>Возвращает jwt-токен</returns>
+        /// <response code="200">Авторизован</response>
+        /// <response code="401">Не авторизован</response>
+        /// <response code="404">Пользователь не найден</response>
+        [HttpPost("user")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<string>> Auth([FromBody] UserAuthDto request)
+        {
+            var command = _mapper.Map<AuthCommand>(request);
+
+            var token = await _mediator.Send(command);
+
+            return Ok(token);
         }
     }
 }

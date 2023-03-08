@@ -46,6 +46,10 @@ namespace EasyTalk.WebApi.Middleware
                     code = HttpStatusCode.Conflict;
                     break;
 
+                case InvalidLoginOrPasswordException:
+                    code = HttpStatusCode.Unauthorized;
+                    break;
+
             }
 
             context.Response.ContentType = "application/json";
