@@ -50,6 +50,10 @@ namespace EasyTalk.WebApi.Middleware
                     code = HttpStatusCode.Unauthorized;
                     break;
 
+                case OperationCanceledException:
+                    code = HttpStatusCode.Forbidden;
+                    break; 
+
             }
 
             context.Response.ContentType = "application/json";

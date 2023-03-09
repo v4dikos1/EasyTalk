@@ -42,11 +42,6 @@ namespace EasyTalk.WebApi.Models.User
         public List<Guid> Interests { get; set; } = new();
 
         /// <summary>
-        /// Роль
-        /// </summary>
-        public Guid? RoleId { get; set; }
-
-        /// <summary>
         /// Аватар
         /// </summary>
         public IFormFile File { get; set; } = null!;

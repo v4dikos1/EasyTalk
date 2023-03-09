@@ -12,7 +12,6 @@ namespace EasyTalk.Application.Users.Commands.Registration
         private readonly IPasswordService _passwordService;
         private readonly IEasyTalkDbContext _dbContext;
         private readonly IMediator _mediator;
-        private const string UserRoleId = "41f6f9c9-7ebf-4122-97f4-6d04e3eef312";
 
         public RegistrationCommandHandler(IPasswordService passwordService, IEasyTalkDbContext dbContext, IMediator mediator)
         {
@@ -54,11 +53,6 @@ namespace EasyTalk.Application.Users.Commands.Registration
                 interests.Add(interest);
             }
 
-            if (request.RoleId != null && await _dbContext.Roles.FindAsync(request!.RoleId, cancellationToken) == null)
-            {
-                throw new NotFoundException(nameof(Role), request.RoleId);
-            }
-
             if (await _dbContext.Users.FirstOrDefaultAsync(u => u.Email.Equals(request.Email), cancellationToken) != null)
             {
                 throw new AlreadyExistsException(nameof(User), request.Email);
@@ -86,7 +80,6 @@ namespace EasyTalk.Application.Users.Commands.Registration
                 NativeLanguageId = request.NativeLanguageId,
                 TargetLanguages = targetLanguages,
                 Interests = interests,
-                RoleId = request.RoleId ?? Guid.Parse(UserRoleId),
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             };

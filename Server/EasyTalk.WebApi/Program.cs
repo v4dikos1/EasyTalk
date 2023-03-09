@@ -4,10 +4,13 @@ using EasyTalk.Application.Interfaces;
 using EasyTalk.Persistence;
 using EasyTalk.WebApi;
 using EasyTalk.WebApi.Middleware;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
+using EasyTalk.Application.Common.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +38,22 @@ builder.Services.AddAutoMapper(config =>
 builder.Services.AddApplication();
 
 builder.Services.AddPersistence(builder.Configuration);
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = AuthOptions.Issuer,
+            ValidateAudience = true,
+            ValidAudience = AuthOptions.Audience,
+            ValidateLifetime = true,
+            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+            ValidateIssuerSigningKey = true
+        };
+    });
 
 builder.Services.AddCors(options =>
 {
@@ -64,8 +83,6 @@ if (app.Environment.IsDevelopment())
             config.RoutePrefix = String.Empty;
         }
     });
-
-   
 }
 
 app.UseCustomExceptionHandler();

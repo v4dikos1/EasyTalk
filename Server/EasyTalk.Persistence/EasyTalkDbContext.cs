@@ -13,7 +13,6 @@ namespace EasyTalk.Persistence
         public DbSet<Language> Languages { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Picture> Pictures { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
 
         public EasyTalkDbContext(DbContextOptions<EasyTalkDbContext> options) : base(options)
@@ -29,7 +28,6 @@ namespace EasyTalk.Persistence
             modelBuilder.ApplyConfiguration(new LanguageConfiguration());
             modelBuilder.ApplyConfiguration(new MessageConfiguration());
             modelBuilder.ApplyConfiguration(new PictureConfiguration());
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
 
             

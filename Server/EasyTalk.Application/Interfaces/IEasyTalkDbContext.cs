@@ -11,7 +11,6 @@ namespace EasyTalk.Application.Interfaces
         DbSet<Language> Languages { get; set; }
         DbSet<Message> Messages { get; set; }
         DbSet<Picture> Pictures { get; set; }
-        DbSet<Role> Roles { get; set; }
         DbSet<User> Users { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);

@@ -1,9 +1,12 @@
 ﻿using System.Net;
+using System.Security.Claims;
 using AutoMapper;
 using EasyTalk.Application.Users.Commands.Auth;
 using EasyTalk.Application.Users.Commands.Registration;
+using EasyTalk.Application.Users.Commands.UpdateUser;
 using EasyTalk.WebApi.Models.User;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyTalk.WebApi.Controllers
@@ -82,5 +85,56 @@ namespace EasyTalk.WebApi.Controllers
 
             return Ok(token);
         }
+
+        /// <summary>
+        /// Обновление пользователя
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// PUT api/1.0/users
+        /// {
+        ///     "UserId": "b897c81c-c54b-43c5-8bef-9375b7223916",
+        ///     "Username": "v4dikos",
+        ///     "Password": "12345"
+        /// }
+        /// </remarks>
+        /// <remarks>
+        /// Если какие-то данные не предполагается изменять, указывать их в запросе не нужно.
+        /// </remarks>
+        /// <param name="request">Новые данные</param>
+        /// <returns>Возвращает пустой ответ</returns>
+        /// /// <response code="204">Пользователь успешно обновлен</response>
+        /// <response code="401">Не авторизован</response>
+        /// <response code="403">Обновляемый пользователь не совпадает с авторизованным</response>
+        /// <response code="404">Пользователь не найден</response>
+        [HttpPut]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> UpdateUser([FromForm] UserUpdateDto request)
+        {
+            var currentUserId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+
+            var command = new UpdateUserCommand
+            {
+                UserId = request.UserId,
+                CurrentUserId = Guid.Parse(currentUserId),
+                UserName = request.UserName,
+                Email = request.Email,
+                Password = request.Password,
+                PhoneNumber = request.PhoneNumber,
+                NativeLanguageId = request.NativeLanguageId,
+                TargetLanguages = request.TargetLanguages,
+                Interests = request.Interests,
+                File = request.File
+            };
+
+            await _mediator.Send(command);
+
+            return NoContent();
+        }
+
     }
 }

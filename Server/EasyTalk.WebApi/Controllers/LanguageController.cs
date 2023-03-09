@@ -6,6 +6,7 @@ using EasyTalk.Application.Languages.Queries.GetLanguageDetails;
 using EasyTalk.Application.Languages.Queries.GetLanguagesList;
 using EasyTalk.WebApi.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyTalk.WebApi.Controllers
@@ -97,6 +98,7 @@ namespace EasyTalk.WebApi.Controllers
         /// <response code="401">Пользователь не авторизован</response>
         /// <response code="400">Ошибки валидации</response>
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -122,6 +124,7 @@ namespace EasyTalk.WebApi.Controllers
         /// <response code="401">Пользователь не авторизован</response>
         /// <response code="400">Ошибки валидации</response>
         [HttpDelete("{id}")]
+        [Authorize]
         [ProducesResponseType(typeof(Unit), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -154,6 +157,7 @@ namespace EasyTalk.WebApi.Controllers
         /// <response code="401">Пользователь не авторизован</response>
         /// <response code="400">Ошибки валидации</response>
         [HttpPut]
+        [Authorize]
         [ProducesResponseType(typeof(Unit), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

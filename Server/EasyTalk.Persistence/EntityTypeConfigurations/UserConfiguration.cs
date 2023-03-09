@@ -36,10 +36,6 @@ namespace EasyTalk.Persistence.EntityTypeConfigurations
                 .HasMany(u => u.Interests)
                 .WithMany(i => i.Users);
 
-            builder
-                .HasOne(u => u.Role)
-                .WithMany(r => r.Users);
-
             builder.Property(u => u.PictureId).HasColumnName("PictureId");
 
             builder

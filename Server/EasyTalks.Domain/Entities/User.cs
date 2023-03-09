@@ -47,8 +47,7 @@
         /// <summary>
         /// Роль
         /// </summary>
-        public Guid RoleId { get; set; }
-        public Role? Role { get; set; }
+        public string Role { get; set; } = string.Empty;
 
         /// <summary>
         /// Аватарка
