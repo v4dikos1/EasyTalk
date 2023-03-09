@@ -50,7 +50,7 @@ namespace EasyTalk.WebApi.Middleware
                     code = HttpStatusCode.Unauthorized;
                     break;
 
-                case OperationCanceledException:
+                case UserOperationCancelledException:
                     code = HttpStatusCode.Forbidden;
                     break; 
 

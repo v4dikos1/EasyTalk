@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using AutoMapper;
 using EasyTalk.Application.Users.Commands.Auth;
+using EasyTalk.Application.Users.Commands.DeleteUser;
 using EasyTalk.Application.Users.Commands.Registration;
 using EasyTalk.Application.Users.Commands.UpdateUser;
 using EasyTalk.WebApi.Models.User;
@@ -129,6 +130,40 @@ namespace EasyTalk.WebApi.Controllers
                 TargetLanguages = request.TargetLanguages,
                 Interests = request.Interests,
                 File = request.File
+            };
+
+            await _mediator.Send(command);
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Удаление пользователя
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// DELETE api/1.0/users?id=b897c81c-c54b-43c5-8bef-9375b7223916
+        /// </remarks>
+        /// <param name="id">id удаляемого пользователя</param>
+        /// <returns>Возращает пустой ответ</returns>
+        /// <response code="204">Пользователь успешно удален</response>
+        /// <response code="401">Не авторизован</response>
+        /// <response code="403">Удяляемый пользователь не совпадает с авторизованным</response>
+        /// <response code="404">Пользователь не найден</response>
+        [HttpDelete("{id}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DeleteUser(Guid id)
+        {
+            var currentUserId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+
+            var command = new DeleteUserCommand
+            {
+                UserId = id,
+                CurrentUserId = Guid.Parse(currentUserId)
             };
 
             await _mediator.Send(command);

@@ -33,7 +33,7 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
 
             if (user.Id != request.CurrentUserId)
             {
-                throw new OperationCanceledException("The user can only delete himself!");
+                throw new UserOperationCancelledException();
             }
 
             if (request.UserName != null)
