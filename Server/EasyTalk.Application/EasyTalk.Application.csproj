@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Pictures\Queries\" />
-    <Folder Include="Users\Queries\" />
   </ItemGroup>
 
 </Project>

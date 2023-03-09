@@ -1,10 +1,12 @@
-﻿using System.Net;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using AutoMapper;
 using EasyTalk.Application.Users.Commands.Auth;
 using EasyTalk.Application.Users.Commands.DeleteUser;
 using EasyTalk.Application.Users.Commands.Registration;
 using EasyTalk.Application.Users.Commands.UpdateUser;
+using EasyTalk.Application.Users.Queries;
+using EasyTalk.Application.Users.Queries.GetUserProfile;
+using EasyTalk.Application.Users.Queries.GetUsersList;
 using EasyTalk.WebApi.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -171,5 +173,91 @@ namespace EasyTalk.WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Получение информации о пользователе
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// GET api/1.0/users?id=b897c81c-c54b-43c5-8bef-9375b7223916
+        /// </remarks>
+        /// <param name="id">Id пользователя</param>
+        /// <returns>Возврщает модель пользователя (UserProfileVm)</returns>
+        /// <response code="200">Пользователь найден</response>
+        /// <response code="404">Пользователь не найден</response>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(UserProfileVm), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<UserProfileVm>> GetUser(Guid id)
+        {
+            var query = new GetUserProfileQuery
+            {
+                Id = id
+            };
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Получение информации об авторизованном пользователе
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// GET api/1.0/users
+        /// </remarks>
+        /// <remarks>Authorization scheme - Bearer</remarks>
+        /// <returns>Возврщает модель пользователя (UserProfileVm)</returns>
+        /// <response code="200">Пользователь найден</response>
+        /// <response code="401">Не авторизован</response>
+        /// <response code="404">Пользователь не найден</response>
+        [HttpGet]
+        [ProducesResponseType(typeof(UserProfileVm), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
+        public async Task<ActionResult<UserProfileVm>> GetUser()
+        {
+            var currentUserId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+
+            var query = new GetUserProfileQuery
+            {
+                Id = Guid.Parse(currentUserId)
+            };
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Получение списка пользователей
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// GET api/1.0/users?offset=0&amp;limit=2
+        /// </remarks>
+        /// <param name="limit">Ограничение возвращаемых пользователей</param>
+        /// <param name="offset">Смещение от начала</param>
+        /// <param name="request">Фильтры</param>
+        /// <returns>Возвращает список пользователей по заданным фильтрам и ограничениям</returns>
+        /// <response code="200">Выполнено успешно</response>
+        [HttpGet("{limit}/{offset}")]
+        [ProducesResponseType(typeof(UserProfileVm), StatusCodes.Status200OK)]
+        public async Task<ActionResult<UsersListVm>> GetUsers(int limit, int offset, [FromQuery]GetUsersListRequest request)
+        {
+            var query = new GetUsersListQuery
+            {
+                Offset = offset,
+                Limit = limit,
+                InterestsFilter = request.InterestsFilter,
+                NativeLanguagesFilter = request.NativeLanguagesFilter,
+                TargetLanguagesFilter = request.TargetLanguagesFilter
+            };
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
+        }
     }
 }
