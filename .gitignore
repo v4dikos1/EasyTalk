@@ -200,3 +200,7 @@ FakesAssemblies/
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
+/Server/d2.vpp
+/Server/diagramm.vpp
+/Server/EasyTalk.jpg
+/Server/Диаграмма Классов.vpp
