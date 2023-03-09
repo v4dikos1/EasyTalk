@@ -10,6 +10,12 @@
 .vs
 .vs/
 
+Server/.vs
+Server/.vs/
+Server/.idea
+Server/EasyTalk.Persistence/Uploads/
+
+
 appsettings.json
 **/appsettings.json
 

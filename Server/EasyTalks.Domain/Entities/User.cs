@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
-
-namespace EasyTalks.Domain.Entities
+﻿namespace EasyTalks.Domain.Entities
 {
     /// <summary>
     /// Пользователь
