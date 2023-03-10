@@ -1,8 +1,14 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using AutoMapper;
 using EasyTalk.Application.Dialogs.Commands.CreateDialog;
+using EasyTalk.Application.Dialogs.Commands.DeleteDialog;
 using EasyTalk.WebApi.Models.Chat;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using EasyTalk.Application.Dialogs.Queries;
+using EasyTalk.Application.Dialogs.Queries.GetDialogDetails;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EasyTalk.WebApi.Controllers
 {
@@ -33,7 +39,7 @@ namespace EasyTalk.WebApi.Controllers
         /// </remarks>
         /// <param name="request">Пользователи</param>
         /// <returns>Возвращает пустой ответ</returns>
-        /// /// <response code="204">Диалог создан</response>
+        /// <response code="204">Диалог создан</response>
         /// <response code="400">Ошибки валидации</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -46,5 +52,74 @@ namespace EasyTalk.WebApi.Controllers
 
             return NoContent();
         }
+
+        /// <summary>
+        /// Удаление диалога между пользователями
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// DELETE api/1.0/dialogs?id=dca5e9c6-3968-4a92-af55-22ce8fbd965c
+        /// </remarks>
+        /// <param name="id">id удаляемого диалога</param>
+        /// <returns>Возвращает пустой овтет</returns>
+        /// <response code = "204">Диалог удален</response>
+        /// <response code = "401">Не авторизован</response>
+        /// <response code = "403">Недостаточно прав</response> 
+        /// <response code="400">Ошибки валидации</response>
+        [HttpDelete("{id}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult> DeleteDialog(Guid id)
+        {
+            var currentUserId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+
+            var command = new DeleteDialogCommand
+            {
+                Id = id,
+                CurrentUserId = Guid.Parse(currentUserId)
+            };
+
+            await _mediator.Send(command);
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Получение деталей диалога по id для авторизаванного пользователя
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// GET api/1.0/dialogs?id=dca5e9c6-3968-4a92-af55-22ce8fbd965c
+        /// </remarks>
+        /// <param name="id">id получаемого диалога</param>
+        /// <returns>Возвращает участиников диалога и сообщения</returns>
+        /// <response code = "200">Данные возвращены успешно</response>
+        /// <response code = "401">Не авторизован</response>
+        /// <response code = "403">Пользователь не является участником чата</response>
+        /// <response code = "403">Диалог не найден</response>
+        [HttpGet("{id}")]
+        [Authorize]
+        [ProducesResponseType(typeof(DialogLookupDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<DialogLookupDto>> GetChat(Guid id)
+        {
+            var currentUserId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+
+            var query = new GetDialogDetailsQuery
+            {
+                Id = id,
+                CurrentUserId = Guid.Parse(currentUserId)
+            };
+
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
+        }
+
     }
 }

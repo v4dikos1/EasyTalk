@@ -52,7 +52,11 @@ namespace EasyTalk.WebApi.Middleware
 
                 case UserOperationCancelledException:
                     code = HttpStatusCode.Forbidden;
-                    break; 
+                    break;
+
+                case DialogOperationCancelledException:
+                    code = HttpStatusCode.Forbidden;
+                    break;
 
             }
 

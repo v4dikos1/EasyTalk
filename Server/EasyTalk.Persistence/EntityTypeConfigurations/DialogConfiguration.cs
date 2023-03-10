@@ -15,6 +15,10 @@ namespace EasyTalk.Persistence.EntityTypeConfigurations
             builder
                 .HasMany(d => d.Users)
                 .WithMany(u => u.Dialogs);
+
+            builder
+                .HasMany(d => d.Messages)
+                .WithOne(m => m.Dialog);
         }
     }
 }

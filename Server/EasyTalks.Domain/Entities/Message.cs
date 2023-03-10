@@ -43,5 +43,12 @@
         /// Вложения
         /// </summary>
         public List<Attachment> Attachments { get; set; } = new();
+
+        /// <summary>
+        /// Диалог, которому принадлежит сообщение
+        /// </summary>
+        public Guid DialogId { get; set; }
+        public Dialog Dialog { get; set; } = null!;
+
     }
 }
