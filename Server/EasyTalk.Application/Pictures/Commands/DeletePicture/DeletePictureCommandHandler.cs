@@ -8,10 +8,12 @@ namespace EasyTalk.Application.Pictures.Commands.DeletePicture
     public class DeletePictureCommandHandler : IRequestHandler<DeletePictureCommand>
     {
         private readonly IEasyTalkDbContext _dbContext;
+        private readonly IFileService _fileService;
 
-        public DeletePictureCommandHandler(IEasyTalkDbContext dbContext)
+        public DeletePictureCommandHandler(IEasyTalkDbContext dbContext, IFileService fileService)
         {
             _dbContext = dbContext;
+            _fileService = fileService;
         }
 
         public async Task Handle(DeletePictureCommand request, CancellationToken cancellationToken)
@@ -23,25 +25,12 @@ namespace EasyTalk.Application.Pictures.Commands.DeletePicture
                 throw new NotFoundException(nameof(Picture), request.Id);
             }
 
-            var directoryPath = Directory.GetParent(Environment.CurrentDirectory) + "\\EasyTalk.Persistence";
-
-            var directory = directoryPath + picture.Path;
-
-            if (Directory.Exists(directory))
+            if (_fileService.DeleteFile(picture.Path))
             {
-                //var di = new DirectoryInfo(directory);
+                _dbContext.Pictures.Remove(picture);
 
-                //foreach (FileInfo file in di.EnumerateFiles())
-                //{
-                //    file.Delete();
-                //}
-                
-                Directory.Delete(directory, true);
+                await _dbContext.SaveChangesAsync(cancellationToken);
             }
-
-            _dbContext.Pictures.Remove(picture);
-
-            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

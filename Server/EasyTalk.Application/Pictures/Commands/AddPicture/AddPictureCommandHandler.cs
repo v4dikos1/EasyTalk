@@ -1,5 +1,4 @@
-﻿using EasyTalk.Application.Common.Exceptions;
-using EasyTalk.Application.Interfaces;
+﻿using EasyTalk.Application.Interfaces;
 using EasyTalks.Domain.Entities;
 using MediatR;
 
@@ -8,10 +7,12 @@ namespace EasyTalk.Application.Pictures.Commands.AddPicture
     public class AddPictureCommandHandler : IRequestHandler<AddPictureCommand, Guid>
     {
         private readonly IEasyTalkDbContext _dbContext;
+        private readonly IFileService _fileService;
 
-        public AddPictureCommandHandler(IEasyTalkDbContext dbContext)
+        public AddPictureCommandHandler(IEasyTalkDbContext dbContext, IFileService fileService)
         {
             _dbContext = dbContext;
+            _fileService = fileService;
         }
 
         public async Task<Guid> Handle(AddPictureCommand request, CancellationToken cancellationToken)
@@ -22,25 +23,9 @@ namespace EasyTalk.Application.Pictures.Commands.AddPicture
                 Id = Guid.NewGuid(),
             };
 
-            var directoryPath = Directory.GetParent(Environment.CurrentDirectory) + "\\EasyTalk.Persistence";
-            var filePath ="\\Uploads\\" + request.UserId.ToString() + "\\";
-
-            var fullPath = directoryPath + filePath;
-
-            if (!Directory.Exists(directoryPath + filePath))
-            {
-                Directory.CreateDirectory(directoryPath + filePath);
-            }
-
-            picture.Path = filePath;
-            await _dbContext.Pictures.AddAsync(picture, cancellationToken);
-
-            await using (var stream = new FileStream(Path.Combine(fullPath, request.File.FileName), FileMode.Create))
-            {
-                await request.File.CopyToAsync(stream, cancellationToken);
-                await stream.FlushAsync(cancellationToken);
-            }
+            picture.Path = await _fileService.SaveFileAsync(picture.UserId.ToString(), request.File, cancellationToken);
             
+            await _dbContext.Pictures.AddAsync(picture, cancellationToken);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 

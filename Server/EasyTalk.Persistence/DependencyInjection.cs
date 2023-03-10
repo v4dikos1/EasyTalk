@@ -16,6 +16,8 @@ namespace EasyTalk.Persistence
             });
             services.AddScoped<IEasyTalkDbContext>(provider => provider.GetService<EasyTalkDbContext>());
 
+            services.AddSingleton<IFileService, FIleService>();
+
             return services;
         }
     }
