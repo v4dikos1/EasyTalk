@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using EasyTalk.Application.Common.Exceptions;
+using EasyTalk.Application.Dialogs.Queries.GetDialogsList;
 using EasyTalk.Application.Interfaces;
 using EasyTalks.Domain.Entities;
 using MediatR;
@@ -22,10 +22,20 @@ namespace EasyTalk.Application.Dialogs.Queries.GetDialogDetails
         public async Task<DialogLookupDto> Handle(GetDialogDetailsQuery request, CancellationToken cancellationToken)
         {
             var dialog = await _dbContext.Dialogs
-                .Include("Users")
-                .Include("Messages")
-                .ProjectTo<DialogLookupDto>(_mapper.ConfigurationProvider)
+                .Select(d => new
+                {
+                    Id = d.Id,
+                    Messages = d.Messages.Take(request.MessagesLimit).Skip(request.MessagesOffset).ToList(),
+                    Users = d.Users
+                })
                 .FirstOrDefaultAsync(d => d.Id == request.Id, cancellationToken);
+
+            var result = new DialogLookupDto
+            {
+                Id = dialog!.Id,
+                Messages = dialog.Messages,
+                Users = dialog.Users.ConvertAll(u => _mapper.Map<UserDialogVm>(u))
+            };
 
             if (dialog == null)
             {
@@ -38,7 +48,7 @@ namespace EasyTalk.Application.Dialogs.Queries.GetDialogDetails
             }
 
 
-            return new DialogLookupDto { Id = dialog.Id, Users = dialog.Users, Messages = dialog.Messages };
+            return result;
         }
     }
 }

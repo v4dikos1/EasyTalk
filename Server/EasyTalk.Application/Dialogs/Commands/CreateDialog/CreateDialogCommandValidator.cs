@@ -11,8 +11,8 @@ namespace EasyTalk.Application.Dialogs.Commands.CreateDialog
                 .WithMessage("Users field is required!");
 
             RuleFor(c => c.Users.Count)
-                .GreaterThanOrEqualTo(2)
-                .WithMessage("At least two people should participate in the dialogue!");
+                .Equal(2)
+                .WithMessage("Only two people should participate in the dialogue!");
         }
     }
 }

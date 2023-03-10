@@ -6,5 +6,8 @@ namespace EasyTalk.Application.Dialogs.Queries.GetDialogDetails
     {
         public Guid Id { get; set; }
         public Guid CurrentUserId { get; set; }
+
+        public int MessagesLimit { get; set; }
+        public int MessagesOffset { get; set; }
     }
 }

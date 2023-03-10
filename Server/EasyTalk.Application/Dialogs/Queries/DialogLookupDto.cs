@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EasyTalk.Application.Common.Mappings;
-using EasyTalk.Application.Users.Queries;
+using EasyTalk.Application.Dialogs.Queries.GetDialogsList;
 using EasyTalks.Domain.Entities;
 
 namespace EasyTalk.Application.Dialogs.Queries
@@ -15,7 +15,7 @@ namespace EasyTalk.Application.Dialogs.Queries
         /// <summary>
         /// Участники диалога
         /// </summary>
-        public List<UserProfileVm> Users { get; set; } = new();
+        public List<UserDialogVm> Users { get; set; } = new();
 
         /// <summary>
         /// Сообщения
