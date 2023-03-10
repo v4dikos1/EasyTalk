@@ -13,6 +13,11 @@
         public string? Content { get; set; }
 
         /// <summary>
+        /// Сообщение-родитель (то сообщение, на которое пользователь отвечает)
+        /// </summary>
+        public Message? RootMessage { get; set; } 
+
+        /// <summary>
         /// Дата и время отправки
         /// </summary>
         public DateTime Date { get; set; }

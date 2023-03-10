@@ -59,7 +59,7 @@ namespace EasyTalk.Application.Users.Commands.Registration
             }
 
             if (request.PhoneNumber != null && 
-                await _dbContext.Users.FirstOrDefaultAsync(u => u.PhoneNumber.Equals(request.PhoneNumber), cancellationToken) != null)
+                await _dbContext.Users.FirstOrDefaultAsync(u => u.PhoneNumber != null && u.PhoneNumber.Substring(1).Equals(request.PhoneNumber.Substring(1)), cancellationToken) != null)
             {
                 throw new AlreadyExistsException(nameof(User), request.PhoneNumber);
             }

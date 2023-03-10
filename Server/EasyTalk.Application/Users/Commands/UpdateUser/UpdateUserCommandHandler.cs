@@ -53,7 +53,7 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
 
             if (request.PhoneNumber != null)
             {
-                if (await _dbContext.Users.FirstOrDefaultAsync(u => u.PhoneNumber == request.PhoneNumber, cancellationToken) != null)
+                if (await _dbContext.Users.FirstOrDefaultAsync(u => u.PhoneNumber != null && u.PhoneNumber.Substring(1).Equals(request.PhoneNumber.Substring(1)), cancellationToken) != null)
                 {
                     throw new AlreadyExistsException(nameof(User), request.PhoneNumber);
                 }
