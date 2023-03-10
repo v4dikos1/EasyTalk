@@ -42,7 +42,6 @@ namespace EasyTalk.WebApi.Controllers
         /// <response code="401">Пользователь не авторизован</response>
         /// <response code="400">Ошибки валидации</response>
         [HttpPost]
-        [Authorize]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
