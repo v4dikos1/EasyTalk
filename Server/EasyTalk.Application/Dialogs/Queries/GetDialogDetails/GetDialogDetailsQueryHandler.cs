@@ -25,7 +25,7 @@ namespace EasyTalk.Application.Dialogs.Queries.GetDialogDetails
                 .Select(d => new
                 {
                     Id = d.Id,
-                    Messages = d.Messages.Take(request.MessagesLimit).Skip(request.MessagesOffset).ToList(),
+                    Messages = d.Messages.OrderByDescending(m => m.Date).Take(request.MessagesLimit).Skip(request.MessagesOffset).ToList(),
                     Users = d.Users
                 })
                 .FirstOrDefaultAsync(d => d.Id == request.Id, cancellationToken);

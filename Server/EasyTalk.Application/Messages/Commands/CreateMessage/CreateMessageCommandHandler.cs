@@ -76,7 +76,8 @@ namespace EasyTalk.Application.Messages.Commands.CreateMessage
                     var command = new CreateAttachmentCommand
                     {
                         File = file,
-                        MessageId = message.Id
+                        MessageId = message.Id,
+                        DialogId = message.DialogId
                     };
                     var attachment = await _mediator.Send(command, cancellationToken);
 

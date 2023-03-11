@@ -58,6 +58,10 @@ namespace EasyTalk.WebApi.Middleware
                     code = HttpStatusCode.Forbidden;
                     break;
 
+                case DialogUnableToCreateException:
+                    code = HttpStatusCode.BadRequest;
+                    break;
+
             }
 
             context.Response.ContentType = "application/json";

@@ -2,7 +2,7 @@
 {
     public class DialogOperationCancelledException : Exception
     {
-        public DialogOperationCancelledException() : base("The chat can only be deleted/viewed by its participant")
+        public DialogOperationCancelledException() : base("The chat or message can only be deleted/viewed by its participant")
         {
 
         }

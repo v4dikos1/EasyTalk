@@ -10,6 +10,7 @@ using EasyTalk.Application.Dialogs.Queries.GetDialogDetails;
 using EasyTalk.Application.Dialogs.Queries.GetDialogsList;
 using EasyTalk.Application.Messages;
 using EasyTalk.Application.Messages.Commands.CreateMessage;
+using EasyTalk.Application.Messages.Commands.UpdateMessage;
 using Microsoft.AspNetCore.Authorization;
 
 namespace EasyTalk.WebApi.Controllers
@@ -160,6 +161,14 @@ namespace EasyTalk.WebApi.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Создание сообщений
+        /// </summary>
+        /// <remarks>
+        /// Только для теста!
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("messages")]
         [Authorize]
         public async Task<ActionResult<MessageViewModel>> CreateMessage([FromForm]CreateMessageViewModel request)
@@ -172,6 +181,34 @@ namespace EasyTalk.WebApi.Controllers
             var response = await _mediator.Send(command);
 
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Обновление сообщения
+        /// </summary>
+        /// <remarks>
+        /// Только для теста!
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPut("messages/{id}")]
+        [Authorize]
+        public async Task<ActionResult> UpdateMessage(Guid id, [FromBody] UpdateMessageViewModel request)
+        {
+            var currentUserId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+
+            var command = new UpdateMessageCommand
+            {
+                UserId = Guid.Parse(currentUserId),
+                MessageId = id,
+                Content = request.Content,
+                IsRead = request.IsRead
+            };
+
+            await _mediator.Send(command);
+
+            return NoContent();
         }
 
     }

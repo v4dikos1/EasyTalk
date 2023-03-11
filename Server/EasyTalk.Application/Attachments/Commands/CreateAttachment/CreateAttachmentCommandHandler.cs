@@ -9,13 +9,11 @@ namespace EasyTalk.Application.Attachments.Commands.CreateAttachment
     public class CreateAttachmentCommandHandler : IRequestHandler<CreateAttachmentCommand, Attachment>
     {
         private readonly IEasyTalkDbContext _dbContext;
-        private readonly IMapper _mapper;
         private readonly IFileService _fileService;
 
-        public CreateAttachmentCommandHandler(IEasyTalkDbContext dbContext, IMapper mapper, IFileService fileService)
+        public CreateAttachmentCommandHandler(IEasyTalkDbContext dbContext, IFileService fileService)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
             _fileService = fileService;
         }
 
@@ -32,7 +30,7 @@ namespace EasyTalk.Application.Attachments.Commands.CreateAttachment
                     Message = message
                 };
 
-                var additionalPath = Path.Combine("attachments", attachment.MessageId.ToString());
+                var additionalPath = Path.Combine("attachments", request.DialogId.ToString(), attachment.MessageId.ToString());
 
                 attachment.Path = await _fileService.SaveFileAsync(additionalPath, request.File, cancellationToken);
 

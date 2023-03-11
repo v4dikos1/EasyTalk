@@ -29,7 +29,12 @@ namespace EasyTalk.Persistence
 
         public bool DeleteFile(string path)
         {
-            var directory = _directoryPath + path;
+            if (!path.StartsWith("Uploads"))
+            {
+                path = Path.Combine("Uploads", path);
+            }
+
+            var directory = Path.Combine(_directoryPath, path);
 
             if (Directory.Exists(directory))
             {

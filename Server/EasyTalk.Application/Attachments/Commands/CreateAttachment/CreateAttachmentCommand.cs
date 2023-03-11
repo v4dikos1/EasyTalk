@@ -12,6 +12,11 @@ namespace EasyTalk.Application.Attachments.Commands.CreateAttachment
         public Guid MessageId { get; set; }
 
         /// <summary>
+        /// Диалог, к которому прикреплено вложение
+        /// </summary>
+        public Guid DialogId { get; set; }
+
+        /// <summary>
         /// Вложение
         /// </summary>
         public IFormFile File { get; set; } = null!;
