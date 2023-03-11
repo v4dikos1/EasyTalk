@@ -32,7 +32,8 @@ namespace EasyTalk.Application.Attachments.Commands.CreateAttachment
 
                 var additionalPath = Path.Combine("attachments", request.DialogId.ToString(), attachment.MessageId.ToString());
 
-                attachment.Path = await _fileService.SaveFileAsync(additionalPath, request.File, cancellationToken);
+                attachment.Path = await _fileService.SaveFileAsync(additionalPath, request.File, attachment.Id.ToString(),
+                    cancellationToken);
 
                 await _dbContext.Attachments.AddAsync(attachment, cancellationToken);
                 await _dbContext.SaveChangesAsync(cancellationToken);

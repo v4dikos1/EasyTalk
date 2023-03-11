@@ -23,7 +23,8 @@ namespace EasyTalk.Application.Pictures.Commands.AddPicture
                 Id = Guid.NewGuid(),
             };
 
-            picture.Path = await _fileService.SaveFileAsync(picture.UserId.ToString(), request.File, cancellationToken);
+            picture.Path = await _fileService.SaveFileAsync(picture.UserId.ToString(), request.File, picture.Id.ToString(),
+                cancellationToken);
             
             await _dbContext.Pictures.AddAsync(picture, cancellationToken);
 

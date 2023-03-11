@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
+using EasyTalk.Application.Pictures.Queries.GetPicture;
 using EasyTalk.Application.Users.Commands.Auth;
 using EasyTalk.Application.Users.Commands.DeleteUser;
 using EasyTalk.Application.Users.Commands.Registration;
@@ -258,6 +259,30 @@ namespace EasyTalk.WebApi.Controllers
             var response = await _mediator.Send(query);
 
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Скачивание аватарки пользователя
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// GET api/1.0/users/picture/b897c81c-c54b-43c5-8bef-9375b7223916
+        /// </remarks>
+        /// <param name="id">id аватарки</param>
+        /// <returns>Возвращает стрим файла</returns>
+        /// <response code = "200" > Файл получен</response>
+        [HttpGet("picture/{id}")]
+        [ProducesResponseType(typeof(FileStreamResult), StatusCodes.Status200OK)]
+        public async Task<FileStreamResult> GetUserPicture(Guid id)
+        {
+            var query = new GetPictureQuery
+            {
+                PicturesId = id
+            };
+
+            var stream = await _mediator.Send(query);
+
+            return new FileStreamResult(stream, "application/octet-stream");
         }
     }
 }

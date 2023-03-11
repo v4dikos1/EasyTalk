@@ -1,5 +1,6 @@
 ﻿using EasyTalk.Application.Interfaces;
 using Microsoft.AspNetCore.Http;
+using System.Threading;
 
 namespace EasyTalk.Persistence
 {
@@ -7,7 +8,7 @@ namespace EasyTalk.Persistence
     {
         private readonly string _directoryPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory)?.ToString() ?? string.Empty, "EasyTalk.Persistence");
 
-        public async Task<string> SaveFileAsync(string additionalPath, IFormFile file, CancellationToken cancellationToken)
+        public async Task<string> SaveFileAsync(string additionalPath, IFormFile file, string fileName, CancellationToken cancellationToken)
         {
             var filePath = Path.Combine("Uploads", additionalPath);
 
@@ -18,7 +19,7 @@ namespace EasyTalk.Persistence
                 Directory.CreateDirectory(fullPath);
             }
 
-            await using (var stream = new FileStream(Path.Combine(fullPath, file.FileName), FileMode.Create))
+            await using (var stream = new FileStream(Path.Combine(fullPath, fileName), FileMode.Create))
             {
                 await file.CopyToAsync(stream, cancellationToken);
                 await stream.FlushAsync(cancellationToken);
@@ -43,6 +44,15 @@ namespace EasyTalk.Persistence
             }
 
             return false;
+        }
+
+        public FileStream GetFile(string path, string fileName)
+        {
+            path = Path.Combine(_directoryPath, path);
+
+            var stream = File.Open(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read, FileShare.Read);
+
+            return stream;
         }
     }
 }

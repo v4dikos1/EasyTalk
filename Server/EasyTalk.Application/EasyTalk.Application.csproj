@@ -24,7 +24,6 @@
   <ItemGroup>
     <Folder Include="Attachments\Queries\" />
     <Folder Include="Messages\Queries\" />
-    <Folder Include="Pictures\Queries\" />
   </ItemGroup>
 
 </Project>
