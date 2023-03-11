@@ -1,4 +1,5 @@
-﻿using EasyTalks.Domain.Entities;
+﻿using EasyTalk.Application.Messages;
+using EasyTalks.Domain.Entities;
 
 namespace EasyTalk.Application.Dialogs.Queries.GetDialogsList
 {
@@ -20,6 +21,6 @@ namespace EasyTalk.Application.Dialogs.Queries.GetDialogsList
         /// <summary>
         /// Последнее сообщение в чате
         /// </summary>
-        public Message? LastMessage { get; set; }
+        public MessageDialogViewModel? LastMessage { get; set; }
     }
 }

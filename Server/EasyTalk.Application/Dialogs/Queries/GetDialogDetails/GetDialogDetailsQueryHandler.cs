@@ -30,11 +30,19 @@ namespace EasyTalk.Application.Dialogs.Queries.GetDialogDetails
                 })
                 .FirstOrDefaultAsync(d => d.Id == request.Id, cancellationToken);
 
+            var attachments = await _dbContext.Attachments
+                .Skip(request.AttachmentsOffset)
+                .Take(request.AttachmentsLimit)
+                .Where(a => a.Message.DialogId == request.Id)
+                .Select(a => a.Id)
+                .ToListAsync(cancellationToken);
+
             var result = new DialogLookupDto
             {
                 Id = dialog!.Id,
-                Messages = dialog.Messages,
-                Users = dialog.Users.ConvertAll(u => _mapper.Map<UserDialogVm>(u))
+                Messages = dialog.Messages.ConvertAll(m => _mapper.Map<MessageDialogViewModel>(m)),
+                Users = dialog.Users.ConvertAll(u => _mapper.Map<UserDialogVm>(u)),
+                Attachments = attachments
             };
 
             if (dialog == null)

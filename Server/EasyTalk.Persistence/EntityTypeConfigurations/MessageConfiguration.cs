@@ -19,9 +19,6 @@ namespace EasyTalk.Persistence.EntityTypeConfigurations
                 .HasOne(m => m.Sender);
 
             builder
-                .HasMany(m => m.Receivers);
-
-            builder
                 .HasMany(m => m.Attachments)
                 .WithOne(a => a.Message);
         }

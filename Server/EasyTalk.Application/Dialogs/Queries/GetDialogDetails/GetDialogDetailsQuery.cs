@@ -9,5 +9,8 @@ namespace EasyTalk.Application.Dialogs.Queries.GetDialogDetails
 
         public int MessagesLimit { get; set; }
         public int MessagesOffset { get; set; }
+
+        public int AttachmentsLimit {get; set; }
+        public int AttachmentsOffset { get; set;}
     }
 }

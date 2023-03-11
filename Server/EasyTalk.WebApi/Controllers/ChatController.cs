@@ -8,6 +8,8 @@ using System.Security.Claims;
 using EasyTalk.Application.Dialogs.Queries;
 using EasyTalk.Application.Dialogs.Queries.GetDialogDetails;
 using EasyTalk.Application.Dialogs.Queries.GetDialogsList;
+using EasyTalk.Application.Messages;
+using EasyTalk.Application.Messages.Commands.CreateMessage;
 using Microsoft.AspNetCore.Authorization;
 
 namespace EasyTalk.WebApi.Controllers
@@ -95,8 +97,10 @@ namespace EasyTalk.WebApi.Controllers
         /// GET api/1.0/dialogs?id=dca5e9c6-3968-4a92-af55-22ce8fbd965c
         /// </remarks>
         /// <param name="id">id получаемого диалога</param>
-        /// <param name="limit">Ограничение по количеству возвращаемых сообщений</param>
-        /// <param name="offset">Смещение от начала чата</param>
+        /// <param name="messageLimit">Ограничение по количеству возвращаемых сообщений</param>
+        /// <param name="messageOffset">Смещение для сообщений от начала чата</param>
+        /// <param name="attachmentLimit">Ограничение по количеству возвращаемых вложений</param>
+        /// <param name="attachmentOffset">Смещение для вложений</param>
         /// <returns>Возвращает участиников диалога и сообщения</returns>
         /// <response code = "200">Данные возвращены успешно</response>
         /// <response code = "401">Не авторизован</response>
@@ -108,7 +112,7 @@ namespace EasyTalk.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult<DialogLookupDto>> GetChat(Guid id, int limit, int offset)
+        public async Task<ActionResult<DialogLookupDto>> GetChat(Guid id, int messageLimit, int messageOffset, int attachmentLimit, int attachmentOffset)
         {
             var currentUserId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
 
@@ -116,8 +120,10 @@ namespace EasyTalk.WebApi.Controllers
             {
                 Id = id,
                 CurrentUserId = Guid.Parse(currentUserId),
-                MessagesLimit = limit,
-                MessagesOffset = offset
+                MessagesLimit = messageLimit,
+                MessagesOffset = messageOffset,
+                AttachmentsLimit = attachmentLimit,
+                AttachmentsOffset = attachmentOffset
             };
 
             var response = await _mediator.Send(query);
@@ -150,6 +156,20 @@ namespace EasyTalk.WebApi.Controllers
             };
 
             var response = await _mediator.Send(query);
+
+            return Ok(response);
+        }
+
+        [HttpPost("messages")]
+        [Authorize]
+        public async Task<ActionResult<MessageViewModel>> CreateMessage([FromForm]CreateMessageViewModel request)
+        {
+            var currentUserId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+
+            var command = _mapper.Map<CreateMessageCommand>(request);
+            command.SenderId = Guid.Parse(currentUserId);
+
+            var response = await _mediator.Send(command);
 
             return Ok(response);
         }

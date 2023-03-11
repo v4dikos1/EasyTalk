@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using EasyTalk.Application.Common.Exceptions;
 using EasyTalk.Application.Interfaces;
-using EasyTalk.Application.Users.Queries;
 using EasyTalks.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +31,12 @@ namespace EasyTalk.Application.Dialogs.Queries.GetDialogsList
             var dialogs = await _dbContext.Dialogs
                 .Include(d => d.Users)
                 .Where(d => d.Users.Contains(user))
+                .Select(d => new
+                {
+                    DialogId = d.Id,
+                    LastMessage = d.Messages.OrderBy(m => m.Date).LastOrDefault(),
+                    User = _mapper.Map<UserDialogVm>(d.Users.FirstOrDefault(u => u.Id != user.Id))
+                })
                 .ToListAsync(cancellationToken);
 
             List<DialogVm> result = new List<DialogVm>();
@@ -41,9 +45,9 @@ namespace EasyTalk.Application.Dialogs.Queries.GetDialogsList
             {
                 result.Add(new DialogVm
                 {
-                    DialogId = dialog.Id,
-                    LastMessage = dialog.Messages.LastOrDefault(),
-                    User = _mapper.Map<UserDialogVm>(dialog.Users.FirstOrDefault(u => u.Id != user.Id))
+                    DialogId = dialog.DialogId,
+                    LastMessage = _mapper.Map<MessageDialogViewModel>(dialog.LastMessage),
+                    User = dialog.User
                 });
             }
 

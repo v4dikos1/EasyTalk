@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EasyTalk.Application.Common.Mappings;
 using EasyTalk.Application.Dialogs.Queries.GetDialogsList;
+using EasyTalk.Application.Messages;
 using EasyTalks.Domain.Entities;
 
 namespace EasyTalk.Application.Dialogs.Queries
@@ -20,7 +21,12 @@ namespace EasyTalk.Application.Dialogs.Queries
         /// <summary>
         /// Сообщения
         /// </summary>
-        public List<Message> Messages { get; set; } = new();
+        public List<MessageDialogViewModel> Messages { get; set; } = new();
+
+        /// <summary>
+        /// Вложения диалога
+        /// </summary>
+        public List<Guid> Attachments {get; set; } = new();
 
         public void Mapping(Profile profile)
         {
