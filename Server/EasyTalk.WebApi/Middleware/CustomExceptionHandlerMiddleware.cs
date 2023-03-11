@@ -52,7 +52,15 @@ namespace EasyTalk.WebApi.Middleware
 
                 case UserOperationCancelledException:
                     code = HttpStatusCode.Forbidden;
-                    break; 
+                    break;
+
+                case DialogOperationCancelledException:
+                    code = HttpStatusCode.Forbidden;
+                    break;
+
+                case DialogUnableToCreateException:
+                    code = HttpStatusCode.BadRequest;
+                    break;
 
             }
 
@@ -61,6 +69,7 @@ namespace EasyTalk.WebApi.Middleware
 
             if (result == string.Empty)
             {
+                Console.WriteLine(exception);
                 result = JsonSerializer.Serialize(new { error = exception.Message });
             }
 

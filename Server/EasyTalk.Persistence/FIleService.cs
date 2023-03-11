@@ -5,13 +5,13 @@ namespace EasyTalk.Persistence
 {
     public class FIleService : IFileService
     {
-        private readonly string _directoryPath = Directory.GetParent(Environment.CurrentDirectory) + "\\EasyTalk.Persistence";
+        private readonly string _directoryPath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory)?.ToString() ?? string.Empty, "EasyTalk.Persistence");
 
         public async Task<string> SaveFileAsync(string additionalPath, IFormFile file, CancellationToken cancellationToken)
         {
-            var filePath = "\\Uploads\\" + additionalPath + "\\";
+            var filePath = Path.Combine("Uploads", additionalPath);
 
-            var fullPath = _directoryPath + filePath;
+            var fullPath = Path.Combine(_directoryPath, filePath);
 
             if (!Directory.Exists(fullPath))
             {
@@ -29,7 +29,12 @@ namespace EasyTalk.Persistence
 
         public bool DeleteFile(string path)
         {
-            var directory = _directoryPath + path;
+            if (!path.StartsWith("Uploads"))
+            {
+                path = Path.Combine("Uploads", path);
+            }
+
+            var directory = Path.Combine(_directoryPath, path);
 
             if (Directory.Exists(directory))
             {

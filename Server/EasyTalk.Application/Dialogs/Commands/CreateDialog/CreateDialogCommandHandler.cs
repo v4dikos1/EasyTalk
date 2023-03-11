@@ -1,6 +1,7 @@
 ﻿using EasyTalk.Application.Common.Exceptions;
 using EasyTalk.Application.Interfaces;
 using EasyTalks.Domain.Entities;
+using FluentValidation;
 using MediatR;
 
 namespace EasyTalk.Application.Dialogs.Commands.CreateDialog
@@ -17,6 +18,11 @@ namespace EasyTalk.Application.Dialogs.Commands.CreateDialog
         public async Task Handle(CreateDialogCommand request, CancellationToken cancellationToken)
         {
             var users = new List<User>();
+
+            if (request.Users.Count != 2)
+            {
+                throw new DialogUnableToCreateException();
+            }
 
             foreach (var userId in request.Users)
             {

@@ -22,10 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dialogs\Queries\" />
+    <Folder Include="Attachments\Queries\" />
+    <Folder Include="Messages\Queries\" />
     <Folder Include="Pictures\Queries\" />
-    <Folder Include="Messages\" />
-    <Folder Include="Attachments\" />
   </ItemGroup>
 
 </Project>

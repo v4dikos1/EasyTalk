@@ -1,9 +1,10 @@
-﻿namespace EasyTalks.Domain.Entities
+﻿using AutoMapper;
+using EasyTalk.Application.Common.Mappings;
+using EasyTalks.Domain.Entities;
+
+namespace EasyTalk.Application.Messages
 {
-    /// <summary>
-    /// Сообщение в диалоге
-    /// </summary>
-    public class Message
+    public class MessageViewModel : IMapWith<Message>
     {
         public Guid Id { get; set; }
 
@@ -16,7 +17,6 @@
         /// Сообщение-родитель (то сообщение, на которое пользователь отвечает)
         /// </summary>
         public Guid? RootMessageId { get; set; }
-        public Message? RootMessage { get; set; } 
 
         /// <summary>
         /// Дата и время отправки
@@ -32,24 +32,28 @@
         /// Отправитель
         /// </summary>
         public Guid SenderId { get; set; }
-        public User Sender { get; set; } = null!;
 
         /// <summary>
         /// Получатель
         /// </summary>
         public Guid ReceiverId { get; set; }
-        public User Receiver { get; set; } = null!;
 
         /// <summary>
         /// Вложения
         /// </summary>
-        public List<Attachment> Attachments { get; set; } = new();
+        public List<Guid> Attachments { get; set; } = new();
 
         /// <summary>
         /// Диалог, которому принадлежит сообщение
         /// </summary>
         public Guid DialogId { get; set; }
-        public Dialog Dialog { get; set; } = null!;
 
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Message, MessageViewModel>()
+                .ForMember(m => m.Attachments,
+                    opt => opt.MapFrom(a => a.Attachments
+                        .ConvertAll(t => t.Id)));
+        }
     }
 }

@@ -11,7 +11,6 @@ namespace EasyTalk.Persistence.EntityTypeConfigurations
             builder.ToTable("Attachment");
 
             builder.HasKey(a => a.Id);
-            builder.Property(a => a.Label).HasMaxLength(250).IsRequired();
             builder.Property(a => a.Path).IsRequired();
 
             builder

@@ -11,11 +11,14 @@ namespace EasyTalk.Persistence.EntityTypeConfigurations
             builder.ToTable("Dialog");
 
             builder.HasKey(d => d.Id);
-            builder.Property(d => d.Title).HasMaxLength(20).IsRequired();
 
             builder
                 .HasMany(d => d.Users)
                 .WithMany(u => u.Dialogs);
+
+            builder
+                .HasMany(d => d.Messages)
+                .WithOne(m => m.Dialog);
         }
     }
 }

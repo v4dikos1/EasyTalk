@@ -6,7 +6,13 @@ namespace EasyTalk.Application.Dialogs.Commands.CreateDialog
     {
         public CreateDialogCommandValidator()
         {
-            RuleFor(c => c.Users).NotEmpty().WithMessage("Users field is required!");
+            RuleFor(c => c.Users)
+                .NotEmpty()
+                .WithMessage("Users field is required!");
+
+            RuleFor(c => c.Users.Count)
+                .Equal(2)
+                .WithMessage("Only two people should participate in the dialogue!");
         }
     }
 }
