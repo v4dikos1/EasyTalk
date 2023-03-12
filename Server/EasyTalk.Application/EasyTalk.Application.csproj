@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Attachments\Queries\" />
     <Folder Include="Messages\Queries\" />
   </ItemGroup>
 

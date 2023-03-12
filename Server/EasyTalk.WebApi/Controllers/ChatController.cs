@@ -5,6 +5,7 @@ using EasyTalk.WebApi.Models.Chat;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using EasyTalk.Application.Attachments.Queries.GetAttachment;
 using EasyTalk.Application.Dialogs.Queries;
 using EasyTalk.Application.Dialogs.Queries.GetDialogDetails;
 using EasyTalk.Application.Dialogs.Queries.GetDialogsList;
@@ -12,6 +13,7 @@ using EasyTalk.Application.Messages;
 using EasyTalk.Application.Messages.Commands.CreateMessage;
 using EasyTalk.Application.Messages.Commands.UpdateMessage;
 using Microsoft.AspNetCore.Authorization;
+using EasyTalk.Application.Pictures.Queries.GetPicture;
 
 namespace EasyTalk.WebApi.Controllers
 {
@@ -211,5 +213,28 @@ namespace EasyTalk.WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Скачивание вложения диалога
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// GET api/1.0/users/attachment/b897c81c-c54b-43c5-8bef-9375b7223916
+        /// </remarks>
+        /// <param name="id">id вложения</param>
+        /// <returns>Возвращает поток файла</returns>
+        /// <response code = "200" > Файл получен</response>
+        [HttpGet("attachments/{id}")]
+        [ProducesResponseType(typeof(FileStreamResult), StatusCodes.Status200OK)]
+        public async Task<FileStreamResult> GetUserPicture(Guid id)
+        {
+            var query = new GetAttachmentQuery
+            {
+                Id = id
+            };
+
+            var stream = await _mediator.Send(query);
+
+            return new FileStreamResult(stream, "application/octet-stream");
+        }
     }
 }
