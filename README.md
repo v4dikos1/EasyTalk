@@ -8,7 +8,7 @@
 <ul>
 <li>Flutter - мобильное приложение</li>
 <li>ASP .NET - сервер, API</li>
-<li>FireBase - СУБД</li>
+<li>PostgreSql - СУБД</li>
 <li>Figma - дизайн</li>
 <li>API DeepL - средство для перевода</li>
 
