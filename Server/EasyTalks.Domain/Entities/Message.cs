@@ -13,6 +13,12 @@
         public string? Content { get; set; }
 
         /// <summary>
+        /// Сообщение-родитель (то сообщение, на которое пользователь отвечает)
+        /// </summary>
+        public Guid? RootMessageId { get; set; }
+        public Message? RootMessage { get; set; } 
+
+        /// <summary>
         /// Дата и время отправки
         /// </summary>
         public DateTime Date { get; set; }
@@ -32,11 +38,18 @@
         /// Получатель
         /// </summary>
         public Guid ReceiverId { get; set; }
-        public List<User> Receivers { get; set; } = null!;
+        public User Receiver { get; set; } = null!;
 
         /// <summary>
         /// Вложения
         /// </summary>
         public List<Attachment> Attachments { get; set; } = new();
+
+        /// <summary>
+        /// Диалог, которому принадлежит сообщение
+        /// </summary>
+        public Guid DialogId { get; set; }
+        public Dialog Dialog { get; set; } = null!;
+
     }
 }

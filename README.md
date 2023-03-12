@@ -23,7 +23,6 @@
 
 Исхаков Вадим - backend разработчик <br>
 <ul>
-<li>VK - vk.com/v4dikos</li>
 <li>Telegram - t.me/v4dikos</li>
 </ul>
 

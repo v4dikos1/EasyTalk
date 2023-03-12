@@ -6,16 +6,11 @@
     public class Attachment
     {
         public Guid Id { get; set; }
-        
-        /// <summary>
-        /// Подпись
-        /// </summary>
-        public string Label { get; set; } = String.Empty;
 
         /// <summary>
         /// Место хранения
         /// </summary>
-        public string Path { get; set; } = String.Empty;
+        public string Path { get; set; } = string.Empty;
 
         /// <summary>
         /// Сообщение, в котором содержится вложение

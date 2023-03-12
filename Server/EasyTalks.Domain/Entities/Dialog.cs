@@ -8,13 +8,13 @@
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Название
-        /// </summary>
-        public string Title { get; set; } = String.Empty;
-
-        /// <summary>
         /// Пользователи, участвующие в диалоге
         /// </summary>
         public List<User> Users { get; set; } = new();
+
+        /// <summary>
+        /// Сообщения
+        /// </summary>
+        public List<Message> Messages { get; set; } = new();
     }
 }

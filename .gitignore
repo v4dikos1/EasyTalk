@@ -10,6 +10,12 @@
 .vs
 .vs/
 
+Server/.vs
+Server/.vs/
+Server/.idea
+Server/EasyTalk.Persistence/Uploads/
+
+
 appsettings.json
 **/appsettings.json
 
@@ -194,3 +200,7 @@ FakesAssemblies/
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
+/Server/d2.vpp
+/Server/diagramm.vpp
+/Server/EasyTalk.jpg
+/Server/Диаграмма Классов.vpp

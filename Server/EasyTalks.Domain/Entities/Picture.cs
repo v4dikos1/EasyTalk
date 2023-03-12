@@ -1,4 +1,6 @@
-﻿namespace EasyTalks.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EasyTalks.Domain.Entities
 {
     /// <summary>
     /// Аватарка пользователя
@@ -10,12 +12,12 @@
         /// <summary>
         /// Путь до места хранения
         /// </summary>
-        public string Path { get; set; } = String.Empty;
+        public string Path { get; set; } = string.Empty;
 
         /// <summary>
         /// Пользователь, загрузивший аватарку
         /// </summary>
         public Guid UserId { get; set; }
-        public User User { get; set; } = null!;
+        public User? User { get; set; }
     }
 }

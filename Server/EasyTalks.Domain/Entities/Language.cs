@@ -13,7 +13,7 @@
         public string Name { get; set; } = String.Empty;
 
         /// <summary>
-        /// Пользователи, изучающие данный язык
+        /// Пользователи, изучающие данный язык 
         /// </summary>
         public List<User> Users { get; set; } = new();
     }

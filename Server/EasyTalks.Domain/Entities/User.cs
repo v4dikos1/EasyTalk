@@ -8,26 +8,6 @@
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Имя
-        /// </summary>
-        public string Firstname { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Фамилия
-        /// </summary>
-        public string Lastname { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Отчество
-        /// </summary>
-        public string? Patronymic { get; set; }
-
-        /// <summary>
-        /// Информация о пользователе
-        /// </summary>
-        public string Info { get; set; } = string.Empty;
-
-        /// <summary>
         /// Логин
         /// </summary>
         public string Username { get; set; } = string.Empty; 
@@ -40,7 +20,7 @@
         /// <summary>
         /// Номер телефона
         /// </summary>
-        public string PhoneNumber { get; set; } = string.Empty;
+        public string? PhoneNumber { get; set; }
 
         /// <summary>
         /// Пароль
@@ -52,7 +32,7 @@
         /// Родной язык
         /// </summary>
         public Guid NativeLanguageId { get; set; }
-        public Language NativeLanguage { get; set; } = null!;
+        public Language? NativeLanguage { get; set; }
 
         /// <summary>
         /// Изучаемые языки
@@ -67,14 +47,13 @@
         /// <summary>
         /// Роль
         /// </summary>
-        public Guid RoleId { get; set; }
-        public Role Role { get; set; } = null!;
+        public string Role { get; set; } = string.Empty;
 
         /// <summary>
         /// Аватарка
         /// </summary>
-        public Guid PictureId { get; set; }
-        public Picture Picture { get; set; } = null!;
+        public Guid? PictureId { get; set; }
+        public Picture? Picture { get; set; }
 
         /// <summary>
         /// Диалоги, в которых участвует пользователь
