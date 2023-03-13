@@ -10,7 +10,7 @@
 <li>ASP .NET - сервер, API</li>
 <li>PostgreSql - СУБД</li>
 <li>Figma - дизайн</li>
-<li>API DeepL - средство для перевода</li>
+<li>Yandex translate API - средство для перевода</li>
 
 </ul>
 
