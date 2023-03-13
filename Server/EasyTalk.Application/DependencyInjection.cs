@@ -22,6 +22,8 @@ namespace EasyTalk.Application
             services.AddSingleton<IPasswordService, PasswordService>();
             services.AddSingleton<ITokenService, TokenService>();
 
+            services.AddSingleton<ITranslateService, YandexTranslateService>();
+
             return services;
         }
     }

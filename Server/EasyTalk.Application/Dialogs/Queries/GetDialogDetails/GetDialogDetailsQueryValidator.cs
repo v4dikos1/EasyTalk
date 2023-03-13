@@ -6,7 +6,7 @@ namespace EasyTalk.Application.Dialogs.Queries.GetDialogDetails
     {
         public GetDialogDetailsQueryValidator()
         {
-            RuleFor(q => q.Id).NotEmpty().WithMessage("Id field is required!");
+            RuleFor(q => q.Id).NotEmpty().WithMessage("Code field is required!");
             RuleFor(q => q.CurrentUserId).NotEmpty().WithMessage("CurrentUserId field is required!");
 
             RuleFor(q => q.AttachmentsLimit)

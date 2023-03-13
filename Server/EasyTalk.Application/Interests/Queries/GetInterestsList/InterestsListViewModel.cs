@@ -1,5 +1,4 @@
-﻿using EasyTalk.Application.Interests.Queries.GetInterestDetails;
-using EasyTalks.Domain.Entities;
+﻿using EasyTalks.Domain.Entities;
 
 namespace EasyTalk.Application.Interests.Queries.GetInterestsList
 {

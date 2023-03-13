@@ -5,8 +5,8 @@ namespace EasyTalk.Application.Interests.Commands.DeleteInterest
     public class DeleteInterestCommand : IRequest
     {
         /// <summary>
-        /// Id удаляемого интереса
+        /// Имя удаляемого интереса
         /// </summary>
-        public Guid Id { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 }

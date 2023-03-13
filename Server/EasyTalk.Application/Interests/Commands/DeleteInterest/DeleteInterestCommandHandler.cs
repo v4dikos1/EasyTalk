@@ -16,11 +16,11 @@ namespace EasyTalk.Application.Interests.Commands.DeleteInterest
 
         public async Task Handle(DeleteInterestCommand request, CancellationToken cancellationToken)
         {
-            var interestToDelete = await _dbContext.Interests.FindAsync(request.Id, cancellationToken);
+            var interestToDelete = await _dbContext.Interests.FindAsync(request.Name.ToLower(), cancellationToken);
 
             if (interestToDelete == null)
             {
-                throw new NotFoundException(nameof(Interest), request.Id);
+                throw new NotFoundException(nameof(Interest), request.Name);
             }
 
             _dbContext.Interests.Remove(interestToDelete);

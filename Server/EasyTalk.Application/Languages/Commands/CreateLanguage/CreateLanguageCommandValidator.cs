@@ -6,7 +6,7 @@ namespace EasyTalk.Application.Languages.Commands.CreateLanguage
     {
         public CreateLanguageCommandValidator()
         {
-            RuleFor(c => c.Name).NotEmpty().MaximumLength(25);
+            RuleFor(c => c.Code).NotEmpty().MaximumLength(3);
         }
     }
 }

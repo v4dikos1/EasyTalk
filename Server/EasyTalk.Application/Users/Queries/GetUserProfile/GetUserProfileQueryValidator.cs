@@ -6,7 +6,7 @@ namespace EasyTalk.Application.Users.Queries.GetUserProfile
     {
         public GetUserProfileQueryValidator()
         {
-            RuleFor(q => q.Id).NotEmpty().WithMessage("Id if required!");
+            RuleFor(q => q.Id).NotEmpty().WithMessage("Code if required!");
         }
     }
 }

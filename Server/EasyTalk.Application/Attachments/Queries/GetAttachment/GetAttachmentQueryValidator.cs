@@ -6,7 +6,7 @@ namespace EasyTalk.Application.Attachments.Queries.GetAttachment
     {
         public GetAttachmentQueryValidator()
         {
-            RuleFor(q => q.Id).NotEmpty().WithMessage("Id field is required!");
+            RuleFor(q => q.Id).NotEmpty().WithMessage("Code field is required!");
         }
     }
 }

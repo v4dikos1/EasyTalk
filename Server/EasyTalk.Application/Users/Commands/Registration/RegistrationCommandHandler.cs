@@ -35,16 +35,16 @@ namespace EasyTalk.Application.Users.Commands.Registration
                 targetLanguages.Add(lang);
             }
 
-            if (await _dbContext.Languages.FindAsync(request.NativeLanguageId, cancellationToken) == null)
+            if (await _dbContext.Languages.FindAsync(request.NativeLanguageCode, cancellationToken) == null)
             {
-                throw new NotFoundException(nameof(Language), request.NativeLanguageId);
+                throw new NotFoundException(nameof(Language), request.NativeLanguageCode);
             }
 
             var interests = new List<Interest>();
 
             foreach (var interestId in request.Interests)
             {
-                var interest = await _dbContext.Interests.FindAsync(interestId, cancellationToken);
+                var interest = await _dbContext.Interests.FindAsync(interestId.ToLower(), cancellationToken);
                 if (interest == null)
                 {
                     throw new NotFoundException(nameof(Interest), interestId);
@@ -77,7 +77,7 @@ namespace EasyTalk.Application.Users.Commands.Registration
                 Username = request.Username,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
-                NativeLanguageId = request.NativeLanguageId,
+                NativeLanguageCode = request.NativeLanguageCode,
                 TargetLanguages = targetLanguages,
                 Interests = interests,
                 PasswordHash = passwordHash,

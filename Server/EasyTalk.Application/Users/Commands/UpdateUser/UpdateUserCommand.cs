@@ -7,7 +7,7 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
     public class UpdateUserCommand : IRequest
     {
         /// <summary>
-        /// Id обновляемого пользователя
+        /// Code обновляемого пользователя
         /// </summary>
         public Guid UserId { get; set;}
 
@@ -26,9 +26,9 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
         [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone Number")]
         public string? PhoneNumber { get; set; }
 
-        public Guid? NativeLanguageId { get; set; }
-        public List<Guid>? TargetLanguages { get; set; }
-        public List<Guid>? Interests { get; set; }
+        public string? NativeLanguageCode { get; set; }
+        public List<string>? TargetLanguages { get; set; }
+        public List<string>? Interests { get; set; }
 
         public IFormFile? File { get; set; }
     }

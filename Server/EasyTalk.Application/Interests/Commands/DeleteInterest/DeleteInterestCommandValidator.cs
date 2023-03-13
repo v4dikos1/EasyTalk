@@ -6,7 +6,7 @@ namespace EasyTalk.Application.Interests.Commands.DeleteInterest
     {
         public DeleteInterestCommandValidator()
         {
-            RuleFor(i => i.Id).NotEqual(Guid.Empty);
+            RuleFor(i => i.Name).NotEqual(string.Empty);
         }
     }
 }

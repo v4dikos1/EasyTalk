@@ -10,9 +10,7 @@ namespace EasyTalk.Persistence.EntityTypeConfigurations
         {
             builder.ToTable("Language");
 
-            builder.HasKey(l => l.Id);
-            builder.Property(l => l.Name).HasMaxLength(25).IsRequired();
-            builder.HasIndex(l => l.Name).IsUnique();
+            builder.HasKey(l => l.Code);
 
             builder
                 .HasMany(l => l.Users)

@@ -6,7 +6,7 @@ namespace EasyTalk.Application.Languages.Commands.DeleteLanguage
     {
         public DeleteLanguageCommandValidator()
         {
-            RuleFor(c => c.Id).NotEqual(Guid.Empty);
+            RuleFor(c => c.Code).NotEqual(string.Empty);
         }
     }
 }

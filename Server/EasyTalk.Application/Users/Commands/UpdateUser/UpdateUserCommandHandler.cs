@@ -68,16 +68,16 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
                 user.PasswordSalt = passwordSalt;
             }
 
-            if (request.NativeLanguageId != null)
+            if (request.NativeLanguageCode != null)
             {
-                var lang = await _dbContext.Languages.FindAsync(request.NativeLanguageId, cancellationToken);
+                var lang = await _dbContext.Languages.FindAsync(request.NativeLanguageCode, cancellationToken);
 
                 if (lang == null)
                 {
-                    throw new NotFoundException(nameof(Language), request.NativeLanguageId);
+                    throw new NotFoundException(nameof(Language), request.NativeLanguageCode);
                 }
 
-                user.NativeLanguageId = (Guid)request.NativeLanguageId;
+                user.NativeLanguageCode = request.NativeLanguageCode;
             }
 
             if (!request.TargetLanguages.IsNullOrEmpty())
@@ -104,7 +104,7 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
 
                 foreach (var interest in request.Interests)
                 {
-                    var newInterest = await _dbContext.Interests.FindAsync(interest, cancellationToken);
+                    var newInterest = await _dbContext.Interests.FindAsync(interest.ToLower(), cancellationToken);
 
                     if (newInterest == null)
                     {

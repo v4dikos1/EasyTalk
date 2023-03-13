@@ -2,11 +2,11 @@
 
 namespace EasyTalk.Application.Languages.Commands.CreateLanguage
 {
-    public class CreateLanguageCommand : IRequest<Guid>
+    public class CreateLanguageCommand : IRequest<string>
     {
         /// <summary>
-        /// Название создаваемого языка
+        /// Код языка
         /// </summary>
-        public string Name { get; set; } = string.Empty;
+        public string Code { get; set; } = string.Empty;
     }
 }

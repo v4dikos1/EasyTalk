@@ -6,7 +6,7 @@
     public class UserUpdateDto
     {
         /// <summary>
-        /// Id обновляемого пользователя
+        /// Code обновляемого пользователя
         /// </summary>
         public Guid UserId { get; set; }
 
@@ -33,17 +33,17 @@
         /// <summary>
         /// Новый родной язык
         /// </summary>
-        public Guid? NativeLanguageId { get; set; }
+        public string? NativeLanguageCode { get; set; }
 
         /// <summary>
         /// Новые изучаемые языки
         /// </summary>
-        public List<Guid>? TargetLanguages { get; set; }
+        public List<string>? TargetLanguages { get; set; }
 
         /// <summary>
         /// Новые интересы
         /// </summary>
-        public List<Guid>? Interests { get; set; }
+        public List<string>? Interests { get; set; }
 
         /// <summary>
         /// Новая аватарка

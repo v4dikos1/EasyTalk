@@ -30,7 +30,15 @@ namespace EasyTalk.Persistence
             modelBuilder.ApplyConfiguration(new PictureConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
 
-            
+            modelBuilder.Entity<Language>().HasData(
+                new Language { Code = "ru" },
+                new Language { Code = "en" },
+                new Language { Code = "cs" });
+
+            modelBuilder.Entity<Interest>().HasData(
+                new Interest { Name = "reading" },
+                new Interest { Name = "sport" },
+                new Interest { Name = "traveling" });
         }
     }
 }

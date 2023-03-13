@@ -92,7 +92,7 @@ if (app.Environment.IsDevelopment())
                 $"/swagger/{description.GroupName}/swagger.json",
                 description.GroupName.ToUpperInvariant());
 
-            config.RoutePrefix = String.Empty;
+            config.RoutePrefix = string.Empty;
         }
     });
 }

@@ -22,7 +22,7 @@ namespace EasyTalk.Application.Users.Commands.Registration
                 .NotEmpty()
                 .WithMessage("PhoneNumber is required!");
 
-            RuleFor(u => u.NativeLanguageId)
+            RuleFor(u => u.NativeLanguageCode)
                 .NotEmpty()
                 .WithMessage("Native language is required!");
 

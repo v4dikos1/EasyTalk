@@ -29,17 +29,17 @@ namespace EasyTalk.WebApi.Models.User
         /// <summary>
         /// Родной язык
         /// </summary>
-        public Guid NativeLanguageId { get; set; }
+        public string NativeLanguageCode { get; set; } = string.Empty;
 
         /// <summary>
         /// Изучаемые языки
         /// </summary>
-        public List<Guid> TargetLanguages { get; set; } = new();
+        public List<string> TargetLanguages { get; set; } = new();
 
         /// <summary>
         /// Интересы
         /// </summary>
-        public List<Guid> Interests { get; set; } = new();
+        public List<string> Interests { get; set; } = new();
 
         /// <summary>
         /// Аватар

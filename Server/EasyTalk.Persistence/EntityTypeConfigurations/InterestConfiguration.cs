@@ -8,11 +8,9 @@ namespace EasyTalk.Persistence.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Interest> builder)
         {
-            builder.ToTable("Inerest");
+            builder.ToTable("Interest");
 
-            builder.HasKey(i => i.Id);
-            builder.Property(i => i.Name).HasMaxLength(15).IsRequired();
-            builder.HasIndex(i => i.Name).IsUnique();
+            builder.HasKey(i => i.Name);
 
             builder
                 .HasMany(i => i.Users)

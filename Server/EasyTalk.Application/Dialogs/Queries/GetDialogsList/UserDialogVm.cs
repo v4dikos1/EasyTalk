@@ -10,7 +10,7 @@ namespace EasyTalk.Application.Dialogs.Queries.GetDialogsList
     public class UserDialogVm : IMapWith<User>
     {
         /// <summary>
-        /// Id пользователя, участвующего в диалоге
+        /// Code пользователя, участвующего в диалоге
         /// </summary>
         public Guid Id { get; set; }
 

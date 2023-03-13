@@ -1,4 +1,6 @@
-﻿namespace EasyTalk.Application.Languages.Queries.GetLanguagesList
+﻿using EasyTalks.Domain.Entities;
+
+namespace EasyTalk.Application.Languages.Queries.GetLanguagesList
 {
     /// <summary>
     /// Список языков
