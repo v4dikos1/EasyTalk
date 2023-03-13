@@ -31,12 +31,13 @@ namespace EasyTalk.Application.Users.Queries.GetUsersList
 
             if (request.NativeLanguagesFilter != null)
             {
-                users = users.Where(u => request.NativeLanguagesFilter.Contains(u.NativeLanguage.Id)).ToList();
+                users = users.Where(u => request.NativeLanguagesFilter.Contains(u.NativeLanguage.Code)).ToList();
             }
 
             if (request.InterestsFilter != null)
             {
-                users = users.Where(u => request.InterestsFilter.All(i => u.Interests.ConvertAll(x => x.Id).Contains(i)))
+                users = users.Where(u => request.InterestsFilter.ConvertAll(f => f.ToLower()).All(i => u.Interests.ConvertAll(x => x.Name)
+                        .Contains(i)))
                     .ToList();
             }
 
@@ -45,7 +46,7 @@ namespace EasyTalk.Application.Users.Queries.GetUsersList
                 users = users
                     .Where(u => request.TargetLanguagesFilter
                         .All(i => u.TargetLanguages
-                            .ConvertAll(x => x.Id)
+                            .ConvertAll(x => x.Code)
                             .Contains(i)))
                     .ToList();
             }

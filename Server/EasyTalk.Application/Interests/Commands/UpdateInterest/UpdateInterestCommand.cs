@@ -5,13 +5,13 @@ namespace EasyTalk.Application.Interests.Commands.UpdateInterest
     public class UpdateInterestCommand : IRequest
     {
         /// <summary>
-        /// Id обнволяемого интереса
+        /// Имя обнволяемого интереса
         /// </summary>
-        public Guid Id { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Новое название интереса
         /// </summary>
-        public string NewName { get; set; } = String.Empty;
+        public string NewName { get; set; } = string.Empty;
     }
 }

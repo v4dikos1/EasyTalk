@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using EasyTalk.Application.Interests.Queries.GetInterestDetails;
 using EasyTalk.Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +14,7 @@ namespace EasyTalk.Application.Interests.Queries.GetInterestsList
         public GetInterestsListQueryHandler(IEasyTalkDbContext dbContext, IMapper mapper)
         {
             this._dbContext = dbContext;
-            this._mapper = mapper;
+            _mapper = mapper;
         }
 
         public async Task<InterestsListViewModel> Handle(GetInterestsListQuery request, CancellationToken cancellationToken)

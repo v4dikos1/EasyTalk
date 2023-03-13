@@ -6,7 +6,7 @@ namespace EasyTalk.WebApi.Models
 {
     public class CreateInterestDto : IMapWith<CreateInterestCommand>
     {
-        public string Name { get; set; } = String.Empty;
+        public string Name { get; set; } = string.Empty;
 
         public void Mapping(Profile profile)
         {

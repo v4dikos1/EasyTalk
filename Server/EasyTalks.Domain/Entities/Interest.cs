@@ -5,12 +5,10 @@
     /// </summary>
     public class Interest
     {
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Название
         /// </summary>
-        public string Name { get; set; } = String.Empty;
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Пользователи с данным интересом

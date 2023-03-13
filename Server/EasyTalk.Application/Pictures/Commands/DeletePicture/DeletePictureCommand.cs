@@ -5,7 +5,7 @@ namespace EasyTalk.Application.Pictures.Commands.DeletePicture
     public class DeletePictureCommand : IRequest
     {
         /// <summary>
-        /// Id удаляемого файла
+        /// Code удаляемого файла
         /// </summary>
         public Guid Id { get; set; }
     }

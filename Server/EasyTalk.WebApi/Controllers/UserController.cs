@@ -39,9 +39,9 @@ namespace EasyTalk.WebApi.Controllers
         ///     "Username": "v4dikos",
         ///     "Email": "v4dikos@yandex.ru",
         ///     "Password": "12345",
-        ///     "NativeLanguageId": "14bdaa2d-9c7b-45c1-b4d0-f6602e8fe227",
-        ///     "TargetLanguages": ["dca5e9c6-3968-4a92-af55-22ce8fbd965c","f281b861-12cd-4ea3-b344-7e5eb07a5718"],
-        ///     "Interests": ["dca5e9c6-3968-4a92-af55-22ce8fbd965c","f281b861-12cd-4ea3-b344-7e5eb07a5718"]
+        ///     "NativeLanguageId": "ru",
+        ///     "TargetLanguages": ["en","cs"],
+        ///     "Interests": ["Книги","Спорт"]
         /// }
         /// Файл берется из формы
         /// </remarks>
@@ -129,7 +129,7 @@ namespace EasyTalk.WebApi.Controllers
                 Email = request.Email,
                 Password = request.Password,
                 PhoneNumber = request.PhoneNumber,
-                NativeLanguageId = request.NativeLanguageId,
+                NativeLanguageCode = request.NativeLanguageCode,
                 TargetLanguages = request.TargetLanguages,
                 Interests = request.Interests,
                 File = request.File
@@ -145,7 +145,7 @@ namespace EasyTalk.WebApi.Controllers
         /// </summary>
         /// <remarks>
         /// Пример запроса:
-        /// DELETE api/1.0/users?id=b897c81c-c54b-43c5-8bef-9375b7223916
+        /// DELETE api/1.0/users/b897c81c-c54b-43c5-8bef-9375b7223916
         /// </remarks>
         /// <param name="id">id удаляемого пользователя</param>
         /// <returns>Возращает пустой ответ</returns>
@@ -179,9 +179,9 @@ namespace EasyTalk.WebApi.Controllers
         /// </summary>
         /// <remarks>
         /// Пример запроса:
-        /// GET api/1.0/users?id=b897c81c-c54b-43c5-8bef-9375b7223916
+        /// GET api/1.0/users/b897c81c-c54b-43c5-8bef-9375b7223916
         /// </remarks>
-        /// <param name="id">Id пользователя</param>
+        /// <param name="id">Code пользователя</param>
         /// <returns>Возврщает модель пользователя (UserProfileVm)</returns>
         /// <response code="200">Пользователь найден</response>
         /// <response code="404">Пользователь не найден</response>

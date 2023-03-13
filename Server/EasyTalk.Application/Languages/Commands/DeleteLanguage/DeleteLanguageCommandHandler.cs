@@ -16,11 +16,11 @@ namespace EasyTalk.Application.Languages.Commands.DeleteLanguage
 
         public async Task Handle(DeleteLanguageCommand request, CancellationToken cancellationToken)
         {
-            var language = await _context.Languages.FindAsync(request.Id, cancellationToken);
+            var language = await _context.Languages.FindAsync(request.Code, cancellationToken);
 
             if (language == null)
             {
-                throw new NotFoundException(nameof(Language), request.Id);
+                throw new NotFoundException(nameof(Language), request.Code);
             }
 
             _context.Languages.Remove(language);

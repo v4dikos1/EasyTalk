@@ -13,7 +13,7 @@ using EasyTalk.Application.Messages;
 using EasyTalk.Application.Messages.Commands.CreateMessage;
 using EasyTalk.Application.Messages.Commands.UpdateMessage;
 using Microsoft.AspNetCore.Authorization;
-using EasyTalk.Application.Pictures.Queries.GetPicture;
+using EasyTalk.Application.Translator.Commands;
 
 namespace EasyTalk.WebApi.Controllers
 {
@@ -71,6 +71,7 @@ namespace EasyTalk.WebApi.Controllers
         /// <response code = "401">Не авторизован</response>
         /// <response code = "403">Недостаточно прав</response> 
         /// <response code="400">Ошибки валидации</response>
+        /// <response code = "404">Диалог не найден</response>
         [HttpDelete("{id}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -235,6 +236,37 @@ namespace EasyTalk.WebApi.Controllers
             var stream = await _mediator.Send(query);
 
             return new FileStreamResult(stream, "application/octet-stream");
+        }
+
+        /// <summary>
+        /// Перевод текста
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        /// POST api/1.0/dialogs/translate
+        /// {
+        ///     "text": "Some text to translate",
+        ///     "targetLanguageCode": "en"
+        /// }
+        /// </remarks>
+        /// <param name="request">Данные для перевода</param>
+        /// <returns>Возвращает переведенный текст</returns>
+        /// <response code = "200">Запрос выполнен успешно</response>
+        /// <response code = "404">Язык для перевода не найден</response>
+        [HttpPost("translate")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType( StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<string>> Translate(TranslateRequestDto request)
+        {
+            var command = new TranslateCommand
+            {
+                Expression = request.Text,
+                TargetLanguageCode = request.TargetLanguageCode
+            };
+
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
         }
     }
 }

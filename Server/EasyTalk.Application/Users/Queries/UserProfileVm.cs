@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EasyTalk.Application.Common.Mappings;
-using EasyTalk.Application.Interests.Queries.GetInterestDetails;
+using EasyTalk.Application.Interests.Queries.GetInterestsList;
 using EasyTalk.Application.Languages.Queries.GetLanguagesList;
 using EasyTalks.Domain.Entities;
 

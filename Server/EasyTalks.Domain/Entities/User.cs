@@ -31,8 +31,8 @@
         /// <summary>
         /// Родной язык
         /// </summary>
-        public Guid NativeLanguageId { get; set; }
-        public Language? NativeLanguage { get; set; }
+        public string NativeLanguageCode { get; set; } = string.Empty;
+        public Language NativeLanguage { get; set; } = null!;
 
         /// <summary>
         /// Изучаемые языки
@@ -43,11 +43,6 @@
         /// Интересы
         /// </summary>
         public List<Interest> Interests { get; set; } = new();
-
-        /// <summary>
-        /// Роль
-        /// </summary>
-        public string Role { get; set; } = string.Empty;
 
         /// <summary>
         /// Аватарка

@@ -62,6 +62,9 @@ namespace EasyTalk.WebApi.Middleware
                     code = HttpStatusCode.BadRequest;
                     break;
 
+                case TranslateException:
+                    code = HttpStatusCode.BadRequest;
+                    break;
             }
 
             context.Response.ContentType = "application/json";

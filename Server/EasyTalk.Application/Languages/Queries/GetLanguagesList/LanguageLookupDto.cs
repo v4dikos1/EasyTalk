@@ -6,8 +6,7 @@ namespace EasyTalk.Application.Languages.Queries.GetLanguagesList
 {
     public class LanguageLookupDto : IMapWith<Language>
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; } = String.Empty;
+        public string Code { get; set; } = string.Empty;
 
         public void Mapping(Profile profile)
         {

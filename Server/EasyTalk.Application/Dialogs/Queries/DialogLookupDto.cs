@@ -9,7 +9,7 @@ namespace EasyTalk.Application.Dialogs.Queries
     public class DialogLookupDto : IMapWith<Dialog>
     {
         /// <summary>
-        /// Id диалога
+        /// Code диалога
         /// </summary>
         public Guid Id { get; set; }
 

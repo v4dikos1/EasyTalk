@@ -5,12 +5,10 @@
     /// </summary>
     public class Language
     {
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Название языка
         /// </summary>
-        public string Name { get; set; } = String.Empty;
+        public string Code { get; set; } = string.Empty;
 
         /// <summary>
         /// Пользователи, изучающие данный язык 

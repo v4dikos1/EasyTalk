@@ -2,7 +2,6 @@
 using EasyTalk.Application.Interests.Commands.CreateInterest;
 using EasyTalk.Application.Interests.Commands.DeleteInterest;
 using EasyTalk.Application.Interests.Commands.UpdateInterest;
-using EasyTalk.Application.Interests.Queries.GetInterestDetails;
 using EasyTalk.Application.Interests.Queries.GetInterestsList;
 using EasyTalk.WebApi.Models;
 using MediatR;
@@ -37,7 +36,7 @@ namespace EasyTalk.WebApi.Controllers
         /// }
         /// </remarks>
         /// <param name="request">Название интереса</param>
-        /// <returns>Возвращает id (guid) созданного интереса</returns>
+        /// <returns>Возвращает имя созданного интереса</returns>
         /// <response code="200">Выполнено успешно</response>
         /// <response code="401">Пользователь не авторизован</response>
         /// <response code="400">Ошибки валидации</response>
@@ -84,53 +83,27 @@ namespace EasyTalk.WebApi.Controllers
         }
 
         /// <summary>
-        /// Получение интереса
-        /// </summary>
-        /// <remarks>
-        /// Пример запроса:
-        /// GET api/1.0/interests?id=sks8u8sj-am8sb2nz-msuh7v71-snj7vgnw
-        /// </remarks>
-        /// <param name="id">id интереса</param>
-        /// <returns>Возвращает интерес по заданному id</returns>
-        /// <response code="200">Выполнено успешно</response>
-        /// <response code="400">Ошибки валидации</response>
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(InterestLookupDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<InterestLookupDto>> Get(Guid id)
-        {
-            var query = new GetInterestDetailQuery
-            {
-                Id = id
-            };
-
-            var response = await _mediator.Send(query);
-
-            return response;
-        }
-
-        /// <summary>
         /// Удаление интереса
         /// </summary>
         /// <remarks>
         /// Пример запроса:
-        /// DELETE api/1.0/interests?id=sks8u8sj-am8sb2nz-msuh7v71-snj7vgnw
+        /// DELETE api/1.0/interests/name=книги
         /// </remarks>
-        /// <param name="id">id удаляемого интереса</param>
+        /// <param name="name">id удаляемого интереса</param>
         /// <returns>Возвращает пустой ответ</returns>
         /// <response code="204">Выполнено успешно</response>
         /// <response code="401">Пользователь не авторизован</response>
         /// <response code="400">Ошибки валидации</response>
-        [HttpDelete("{id}")]
+        [HttpDelete("{name}")]
         [Authorize]
         [ProducesResponseType(typeof(Unit), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult> Delete(Guid id)
+        public async Task<ActionResult> Delete(string name)
         {
             var command = new DeleteInterestCommand
             {
-                Id = id
+                Name = name
             };
 
             await _mediator.Send(command);
@@ -145,11 +118,11 @@ namespace EasyTalk.WebApi.Controllers
         /// Пример запроса:
         /// PUT api/1.0/interests
         /// {
-        ///     "Id": "sks8u8sj-am8sb2nz-msuh7v71-snj7vgnw",
+        ///     "Name": "Книги",
         ///     "NewName": "Чтение"
         /// }
         /// </remarks>
-        /// <param name="request">Id интереса и новое название</param>
+        /// <param name="request">Старое имя интереса и новое название</param>
         /// <returns>Возвращает пустой ответ</returns>
         /// <response code="204">Выполнено успешно</response>
         /// <response code="401">Пользователь не авторизован</response>

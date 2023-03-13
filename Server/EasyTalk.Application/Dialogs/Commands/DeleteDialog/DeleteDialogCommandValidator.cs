@@ -6,7 +6,7 @@ namespace EasyTalk.Application.Dialogs.Commands.DeleteDialog
     {
         public DeleteDialogCommandValidator()
         {
-            RuleFor(c => c.Id).NotEmpty().WithMessage("Id is required!");
+            RuleFor(c => c.Id).NotEmpty().WithMessage("Code is required!");
             RuleFor(c => c.CurrentUserId).NotEmpty().WithMessage("CurrentUserId is required!");
         }
     }
