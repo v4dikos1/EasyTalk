@@ -204,3 +204,6 @@ ehthumbs.db
 /Server/diagramm.vpp
 /Server/EasyTalk.jpg
 /Server/Диаграмма Классов.vpp
+/Server/EasyTalk.Application/Common/Services/AuthOptions.cs
+/Server/EasyTalk.WebApi/wwwroot/ind.html
+/Server/EasyTalk.WebApi/wwwroot/chat.html
