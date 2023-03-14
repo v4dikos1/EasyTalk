@@ -12,7 +12,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using EasyTalk.Application.Common.Services;
 using System.Text.Json.Serialization;
-using AutoMapper;
+using EasyTalk.WebApi.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,8 +38,9 @@ builder.Services.AddAutoMapper(config =>
 });
 
 builder.Services.AddApplication();
-
 builder.Services.AddPersistence(builder.Configuration);
+
+builder.Services.AddSingleton<MessengerManager>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -78,6 +79,8 @@ builder.Services.AddControllersWithViews()
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
     );
 
+builder.Services.AddSignalR();  
+
 var app = builder.Build();
 
 var provider = app.Services.GetService<IApiVersionDescriptionProvider>();
@@ -112,6 +115,12 @@ app.UseAuthorization();
 
 app.UseApiVersioning();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    app.MapControllers();
+    app.MapHub<MessengerHub>("/chat");
+});
+
+
 
 app.Run();

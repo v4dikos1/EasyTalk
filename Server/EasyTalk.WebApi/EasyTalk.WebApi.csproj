@@ -25,6 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\ind.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="EntityFrameworkCore.Diagrams" Version="0.4.2" />
@@ -39,11 +43,6 @@
   <ItemGroup>
     <ProjectReference Include="..\EasyTalk.Application\EasyTalk.Application.csproj" />
     <ProjectReference Include="..\EasyTalk.Persistence\EasyTalk.Persistence.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 	
 	
