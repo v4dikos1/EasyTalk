@@ -56,14 +56,18 @@ namespace EasyTalk.WebApi.Hubs
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessageAsync(Guid senderId, Guid dialogId, string message)
+        public async Task SendMessageAsync(Guid senderId, Guid dialogId, string message, List<IFormFile>? attachments = null, 
+            Guid? rootMessageId = null)
         {
             var command = new CreateMessageCommand
             {
                 Content = message,
                 DialogId = dialogId,
-                SenderId = senderId
+                SenderId = senderId,
             };
+
+            if (attachments != null) command.Attachments = attachments;
+            if (rootMessageId != null) command.RootMessageId = rootMessageId;
 
             var response = await _mediator.Send(command);
 
