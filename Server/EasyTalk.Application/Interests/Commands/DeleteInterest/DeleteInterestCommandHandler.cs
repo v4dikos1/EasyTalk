@@ -1,5 +1,6 @@
 ﻿using EasyTalk.Application.Common.Exceptions;
 using EasyTalk.Application.Interfaces;
+using EasyTalk.Application.Interfaces.Repositories;
 using EasyTalks.Domain.Entities;
 using MediatR;
 
@@ -7,24 +8,21 @@ namespace EasyTalk.Application.Interests.Commands.DeleteInterest
 {
     public class DeleteInterestCommandHandler : IRequestHandler<DeleteInterestCommand>
     {
-        private readonly IEasyTalkDbContext _dbContext;
+        private readonly IInterestRepository _interestRepository;
 
-        public DeleteInterestCommandHandler(IEasyTalkDbContext dbContext)
+        public DeleteInterestCommandHandler(IInterestRepository interestRepository)
         {
-            this._dbContext = dbContext;
+            _interestRepository = interestRepository;
         }
 
         public async Task Handle(DeleteInterestCommand request, CancellationToken cancellationToken)
         {
-            var interestToDelete = await _dbContext.Interests.FindAsync(request.Name.ToLower(), cancellationToken);
+            var response = await _interestRepository.DeleteInterest(request.Name, cancellationToken);
 
-            if (interestToDelete == null)
+            if (response == false)
             {
                 throw new NotFoundException(nameof(Interest), request.Name);
             }
-
-            _dbContext.Interests.Remove(interestToDelete);
-            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

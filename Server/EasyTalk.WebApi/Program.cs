@@ -39,6 +39,7 @@ builder.Services.AddAutoMapper(config =>
 
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddValidation();
 
 builder.Services.AddSingleton<MessengerManager>();
 
@@ -79,7 +80,10 @@ builder.Services.AddControllersWithViews()
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
     );
 
-builder.Services.AddSignalR();  
+builder.Services.AddSignalR(options =>
+{
+    options.EnableDetailedErrors = true;
+});
 
 var app = builder.Build();
 
@@ -120,7 +124,6 @@ app.UseEndpoints(endpoints =>
     app.MapControllers();
     app.MapHub<MessengerHub>("/chat");
 });
-
 
 
 app.Run();

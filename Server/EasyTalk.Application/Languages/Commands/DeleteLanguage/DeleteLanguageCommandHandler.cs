@@ -1,30 +1,33 @@
-﻿using EasyTalk.Application.Common.Exceptions;
-using EasyTalk.Application.Interfaces;
-using EasyTalks.Domain.Entities;
+﻿using EasyTalk.Application.Interfaces.Repositories;
+using FluentValidation;
 using MediatR;
+using ValidationException = FluentValidation.ValidationException;
 
 namespace EasyTalk.Application.Languages.Commands.DeleteLanguage
 {
-    public class DeleteLanguageCommandHandler : IRequestHandler<DeleteLanguageCommand>
+    public class DeleteLanguageCommandHandler : IRequestHandler<DeleteLanguageCommand, bool>
     {
-        private readonly IEasyTalkDbContext _context;
+        private readonly ILanguageRepository _languageRepository;
+        private readonly IValidator<DeleteLanguageCommand> _validator;
 
-        public DeleteLanguageCommandHandler(IEasyTalkDbContext context)
+        public DeleteLanguageCommandHandler(ILanguageRepository languageRepository, IValidator<DeleteLanguageCommand> validator)
         {
-            _context = context;
+            _languageRepository = languageRepository;
+            _validator = validator;
         }
 
-        public async Task Handle(DeleteLanguageCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteLanguageCommand request, CancellationToken cancellationToken)
         {
-            var language = await _context.Languages.FindAsync(request.Code, cancellationToken);
+            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
-            if (language == null)
+            if (!validationResult.IsValid)
             {
-                throw new NotFoundException(nameof(Language), request.Code);
+                throw new ValidationException(validationResult.Errors);
             }
 
-            _context.Languages.Remove(language);
-            await _context.SaveChangesAsync(cancellationToken);
+            var response = await _languageRepository.DeleteLanguage(request.Code, cancellationToken);
+
+            return response;
         }
     }
 }

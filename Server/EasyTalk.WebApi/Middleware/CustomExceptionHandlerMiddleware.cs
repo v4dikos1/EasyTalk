@@ -20,6 +20,11 @@ namespace EasyTalk.WebApi.Middleware
             {
                 await _next(context);
             }
+
+            catch (InvalidOperationException ex)
+            {
+                await HandleExceptionAsync(context, ex);
+            }
             catch (Exception ex)
             {
                 await HandleExceptionAsync(context, ex);

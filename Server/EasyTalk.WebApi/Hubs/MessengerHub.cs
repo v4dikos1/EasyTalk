@@ -38,8 +38,8 @@ namespace EasyTalk.WebApi.Hubs
                 throw new NotFoundException(nameof(User), userId);
             }
 
-
             var connectionId = Context.ConnectionId;
+
             _messengerManager.ConnectUser(Guid.Parse(userId), connectionId);
 
             await base.OnConnectedAsync();
@@ -48,6 +48,7 @@ namespace EasyTalk.WebApi.Hubs
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             var isUserRemoved = _messengerManager.DisconnectUser(Context.ConnectionId);
+            
             if (!isUserRemoved)
             {
                 await base.OnDisconnectedAsync(exception);
@@ -56,15 +57,17 @@ namespace EasyTalk.WebApi.Hubs
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessageAsync(Guid senderId, Guid dialogId, string message, List<IFormFile>? attachments = null, 
-            Guid? rootMessageId = null)
+        public async Task SendMessageAsync(string senderId, string dialogId, string message)
         {
             var command = new CreateMessageCommand
             {
                 Content = message,
-                DialogId = dialogId,
-                SenderId = senderId,
+                DialogId = Guid.Parse(dialogId),
+                SenderId = Guid.Parse(senderId)
             };
+
+            List<IFormFile>? attachments = null;
+            Guid? rootMessageId = null;
 
             if (attachments != null) command.Attachments = attachments;
             if (rootMessageId != null) command.RootMessageId = rootMessageId;
@@ -77,13 +80,13 @@ namespace EasyTalk.WebApi.Hubs
             if (receiver != null)
             {
                 await Clients.Clients(receiver.Connections.ToList().ConvertAll(c => c.ConnectionId))
-                    .SendMessageToClientAsync(dialogId, message);
+                    .SendMessageToClientAsync(Guid.Parse(dialogId), message);
             }
 
             if (sender != null)
             {
                 await Clients.Clients(sender.Connections.ToList().ConvertAll(c => c.ConnectionId))
-                    .SendMessageToClientAsync(dialogId, message);
+                    .SendMessageToClientAsync(Guid.Parse(dialogId), message);
             }
         }
     }

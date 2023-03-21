@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EasyTalk.Application.Common.Exceptions;
 using EasyTalk.Application.Interfaces;
+using EasyTalk.Application.Interfaces.Repositories;
 using EasyTalks.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,22 +10,18 @@ namespace EasyTalk.Application.Users.Queries.GetUserProfile
 {
     public class GetUserProfileQueryHandler : IRequestHandler<GetUserProfileQuery, UserProfileVm>
     {
-        private readonly IEasyTalkDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
 
-        public GetUserProfileQueryHandler(IEasyTalkDbContext dbContext, IMapper mapper)
+        public GetUserProfileQueryHandler(IMapper mapper, IUserRepository userRepository)
         {
-            _dbContext = dbContext;
             _mapper = mapper;
+            _userRepository = userRepository;
         }
 
         public async Task<UserProfileVm> Handle(GetUserProfileQuery request, CancellationToken cancellationToken)
         {
-            var user = await _dbContext.Users
-                .Include("Interests")
-                .Include("NativeLanguage")
-                .Include("TargetLanguages")
-                .FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
+            var user = await _userRepository.GetUserById(request.Id, cancellationToken);
 
             if (user == null)
             {

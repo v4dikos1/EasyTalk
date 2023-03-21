@@ -1,10 +1,9 @@
-﻿using EasyTalk.Application.Common.Behaviors;
-using FluentValidation;
-using MediatR;
+﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using EasyTalk.Application.Common.Services;
 using EasyTalk.Application.Interfaces;
+using EasyTalk.Application.Users.Commands.Registration;
 
 namespace EasyTalk.Application
 {
@@ -15,9 +14,6 @@ namespace EasyTalk.Application
             services.AddMediatR(cfg => 
                 cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
             );
-
-            services.AddValidatorsFromAssemblies(new[] {Assembly.GetExecutingAssembly()});
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             services.AddSingleton<IPasswordService, PasswordService>();
             services.AddSingleton<ITokenService, TokenService>();

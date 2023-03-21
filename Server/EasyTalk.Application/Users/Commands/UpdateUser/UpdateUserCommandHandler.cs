@@ -1,5 +1,6 @@
 ﻿using EasyTalk.Application.Common.Exceptions;
 using EasyTalk.Application.Interfaces;
+using EasyTalk.Application.Interfaces.Repositories;
 using EasyTalk.Application.Pictures.Commands.AddPicture;
 using EasyTalk.Application.Pictures.Commands.DeletePicture;
 using EasyTalks.Domain.Entities;
@@ -14,17 +15,24 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
         private readonly IEasyTalkDbContext _dbContext;
         private readonly IPasswordService _passwordService;
         private readonly IMediator _mediator;
+        private readonly IUserRepository _userRepository;
+        private readonly ILanguageRepository _languageRepository;
+        private readonly IInterestRepository _interestRepository;
 
-        public UpdateUserCommandHandler(IEasyTalkDbContext dbContext, IPasswordService passwordService, IMediator mediator)
+        public UpdateUserCommandHandler(IEasyTalkDbContext dbContext, IPasswordService passwordService, IMediator mediator,
+            IUserRepository userRepository, ILanguageRepository languageRepository, IInterestRepository interestRepository)
         {
             _dbContext = dbContext;
             _passwordService = passwordService;
             _mediator = mediator;
+            _userRepository = userRepository;
+            _languageRepository = languageRepository;
+            _interestRepository = interestRepository;
         }
 
         public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _dbContext.Users.FindAsync(request.UserId, cancellationToken);
+            var user = await _userRepository.GetUserById(request.UserId, cancellationToken);
 
             if (user == null)
             {
@@ -43,7 +51,7 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
 
             if (request.Email != null)
             {
-                if (await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken) != null)
+                if (await _userRepository.GetUserByEmail(request.Email, cancellationToken) != null)
                 {
                     throw new AlreadyExistsException(nameof(User), request.Email);
                 }
@@ -53,7 +61,7 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
 
             if (request.PhoneNumber != null)
             {
-                if (await _dbContext.Users.FirstOrDefaultAsync(u => u.PhoneNumber != null && u.PhoneNumber.Substring(1).Equals(request.PhoneNumber.Substring(1)), cancellationToken) != null)
+                if (await _userRepository.GetUserByPhoneNumber(request.PhoneNumber, cancellationToken) != null)
                 {
                     throw new AlreadyExistsException(nameof(User), request.PhoneNumber);
                 }
@@ -70,7 +78,7 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
 
             if (request.NativeLanguageCode != null)
             {
-                var lang = await _dbContext.Languages.FindAsync(request.NativeLanguageCode, cancellationToken);
+                var lang = await _languageRepository.GetLanguage(request.NativeLanguageCode, cancellationToken);
 
                 if (lang == null)
                 {
@@ -85,7 +93,7 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
                 List<Language> newTargetLanguages = new();
                 foreach (var lang in request.TargetLanguages)
                 {
-                    var language = await _dbContext.Languages.FindAsync(lang, cancellationToken);
+                    var language = await _languageRepository.GetLanguage(lang, cancellationToken);
 
                     if (language == null)
                     {
@@ -104,7 +112,7 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
 
                 foreach (var interest in request.Interests)
                 {
-                    var newInterest = await _dbContext.Interests.FindAsync(interest.ToLower(), cancellationToken);
+                    var newInterest = await _interestRepository.GetInterest(interest.ToLower(), cancellationToken);
 
                     if (newInterest == null)
                     {
@@ -143,7 +151,7 @@ namespace EasyTalk.Application.Users.Commands.UpdateUser
                 user.PictureId = newPicture;
             }
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await _userRepository.UpdateUser(request.UserId, user, cancellationToken);
         }
     }
 }

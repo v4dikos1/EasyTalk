@@ -4,29 +4,31 @@ using EasyTalks.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using EasyTalk.Application.Interfaces.Repositories;
 
 namespace EasyTalk.Application.Users.Commands.Auth
 {
     public class AuthCommandHandler : IRequestHandler<AuthCommand, string>
     {
-        private readonly IEasyTalkDbContext _dbContext;
         private readonly IPasswordService _passwordService;
         private readonly ITokenService _tokenService;
+        private readonly IUserRepository _userRepository;
 
-        public AuthCommandHandler(IEasyTalkDbContext dbContext, IPasswordService passwordService, ITokenService tokenService)
+        public AuthCommandHandler(IPasswordService passwordService, ITokenService tokenService,
+            IUserRepository userRepository)
         {
-            _dbContext = dbContext;
             _passwordService = passwordService;
             _tokenService = tokenService;
+            _userRepository = userRepository;
         }
 
         public async Task<string> Handle(AuthCommand request, CancellationToken cancellationToken)
         {
             var userByEmail = 
-                await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == request.Login, cancellationToken);
+                await _userRepository.GetUserByEmail(request.Login, cancellationToken);
 
             var userByUsername =
-                await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == request.Login, cancellationToken);
+                await _userRepository.GetUserByUsername(request.Login, cancellationToken);
 
             if (userByEmail == null && userByUsername == null)
             {

@@ -15,6 +15,8 @@
 
             var user = new ChatUser(userId);
             user.AddConnection(connectionId);
+            Console.WriteLine($"--> New connection: {connectionId} for User {user.Id}");
+
             Users.Add(user);
         }
 
@@ -40,10 +42,14 @@
             if (userExists.Connections.Count() == 1)
             {
                 Users.Remove(userExists);
+                Console.WriteLine($"--> User {userExists} log out");
+
                 return true;
             }
 
             userExists.RemoveConnection(connectionId);
+            Console.WriteLine($"--> Connection {connectionId} disconnected");
+
             return false;
         }
 

@@ -1,27 +1,37 @@
-﻿using EasyTalk.Application.Interfaces;
+﻿using EasyTalk.Application.Common.Exceptions;
+using EasyTalk.Application.Interfaces.Repositories;
 using EasyTalks.Domain.Entities;
+using FluentValidation;
 using MediatR;
 
 namespace EasyTalk.Application.Languages.Commands.CreateLanguage
 {
     public class CreateLanguageCommandHandler : IRequestHandler<CreateLanguageCommand, string>
     {
-        private readonly IEasyTalkDbContext _context;
+        private readonly ILanguageRepository _languageRepository;
+        private readonly IValidator<CreateLanguageCommand> _validator;
 
-        public CreateLanguageCommandHandler(IEasyTalkDbContext context)
+        public CreateLanguageCommandHandler(ILanguageRepository languageRepository, IValidator<CreateLanguageCommand> validator)
         {
-            _context = context;
+            _languageRepository = languageRepository;
+            _validator = validator;
         }
 
         public async Task<string> Handle(CreateLanguageCommand request, CancellationToken cancellationToken)
         {
-            var language = new Language
-            {
-                Code = request.Code
-            };
+            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
-            await _context.Languages.AddAsync(language, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
+            if (await _languageRepository.GetLanguage(request.Code, cancellationToken) != null)
+            {
+                throw new AlreadyExistsException(nameof(Language), request.Code);
+            }
+
+            var language = await _languageRepository.CreateLanguage(request.Code, cancellationToken);
 
             return language.Code;
         }

@@ -1,31 +1,36 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using EasyTalk.Application.Interfaces;
+using EasyTalk.Application.Interfaces.Repositories;
+using FluentValidation;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace EasyTalk.Application.Languages.Queries.GetLanguagesList
 {
     public class GetLanguagesListQueryHandler : IRequestHandler<GetLanguagesListQuery, LanguageListVm>
     {
-        private readonly IEasyTalkDbContext _context;
         private readonly IMapper _mapper;
+        private readonly ILanguageRepository _languageRepository;
+        private readonly IValidator<GetLanguagesListQuery> _validator;
 
-        public GetLanguagesListQueryHandler(IEasyTalkDbContext context, IMapper mapper)
+        public GetLanguagesListQueryHandler(IMapper mapper, ILanguageRepository languageRepository,
+            IValidator<GetLanguagesListQuery> validator)
         {
-            _context = context;
             _mapper = mapper;
+            _languageRepository = languageRepository;
+            _validator = validator;
         }
 
         public async Task<LanguageListVm> Handle(GetLanguagesListQuery request, CancellationToken cancellationToken)
         {
-            var languages = await _context.Languages
-                .Skip(request.Offset)
-                .Take(request.Limit)
-                .ProjectTo<LanguageLookupDto>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
-            return new LanguageListVm { Languages = languages };
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
+            var languages = await _languageRepository.GetLanguages(request.Offset, request.Limit, cancellationToken);
+
+            return new LanguageListVm { Languages = _mapper.Map<List<LanguageLookupDto>>(languages) };
         }
     }
 }

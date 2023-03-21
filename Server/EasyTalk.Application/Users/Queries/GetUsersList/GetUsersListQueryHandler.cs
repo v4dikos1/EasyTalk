@@ -1,20 +1,19 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using EasyTalk.Application.Interfaces;
+using EasyTalk.Application.Interfaces.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace EasyTalk.Application.Users.Queries.GetUsersList
 {
     public class GetUsersListQueryHandler : IRequestHandler<GetUsersListQuery, UsersListVm>
     {
-        private readonly IEasyTalkDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
 
-        public GetUsersListQueryHandler(IEasyTalkDbContext dbContext, IMapper mapper)
+        public GetUsersListQueryHandler(IMapper mapper, IUserRepository userRepository)
         {
-            _dbContext = dbContext;
             _mapper = mapper;
+            _userRepository = userRepository;
         }
 
         public async Task<UsersListVm> Handle(GetUsersListQuery request, CancellationToken cancellationToken)
@@ -22,41 +21,10 @@ namespace EasyTalk.Application.Users.Queries.GetUsersList
             var interestsFilter = request.InterestsFilter;
             var targetLanguagesFilter = request.TargetLanguagesFilter;
 
-            var users = await _dbContext.Users
-                .Include("Interests")
-                .Include("NativeLanguage")
-                .Include("TargetLanguages")
-                .ProjectTo<UserProfileVm>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+            var users = await _userRepository.GetUsers(request.Limit, request.Offset,
+                request.InterestsFilter, request.NativeLanguagesFilter, request.TargetLanguagesFilter, cancellationToken);
 
-            if (request.NativeLanguagesFilter != null)
-            {
-                users = users.Where(u => request.NativeLanguagesFilter.Contains(u.NativeLanguage.Code)).ToList();
-            }
-
-            if (request.InterestsFilter != null)
-            {
-                users = users.Where(u => request.InterestsFilter.ConvertAll(f => f.ToLower()).All(i => u.Interests.ConvertAll(x => x.Name)
-                        .Contains(i)))
-                    .ToList();
-            }
-
-            if (request.TargetLanguagesFilter != null)
-            {
-                users = users
-                    .Where(u => request.TargetLanguagesFilter
-                        .All(i => u.TargetLanguages
-                            .ConvertAll(x => x.Code)
-                            .Contains(i)))
-                    .ToList();
-            }
-
-            users = users
-                .Skip(request.Offset)
-                .Take(request.Limit)
-                .ToList();
-
-            return new UsersListVm { Users = users };
+            return new UsersListVm { Users = _mapper.Map<List<UserProfileVm>>(users) };
         }
     }
 }

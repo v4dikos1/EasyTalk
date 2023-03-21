@@ -1,5 +1,6 @@
 ﻿using EasyTalk.Application.Common.Exceptions;
 using EasyTalk.Application.Interfaces;
+using EasyTalk.Application.Interfaces.Repositories;
 using EasyTalks.Domain.Entities;
 using MediatR;
 
@@ -7,27 +8,21 @@ namespace EasyTalk.Application.Interests.Commands.CreateInterest
 {
     public class CreateInterestCommandHandler : IRequestHandler<CreateInterestCommand, string>
     {
-        private readonly IEasyTalkDbContext _dbContext;
+        private readonly IInterestRepository _interestRepository;
 
-        public CreateInterestCommandHandler(IEasyTalkDbContext dbContext)
+        public CreateInterestCommandHandler(IInterestRepository interestRepository)
         {
-            this._dbContext = dbContext;
+            _interestRepository = interestRepository;
         }
 
         public async Task<string> Handle(CreateInterestCommand request, CancellationToken cancellationToken)
         {
-            if (await _dbContext.Interests.FindAsync(request.Name) != null)
+            if (await _interestRepository.GetInterest(request.Name, cancellationToken) != null)
             {
                 throw new AlreadyExistsException(nameof(Interest), request.Name);
             }
 
-            Interest interest = new Interest
-            {
-                Name = request.Name.ToLower()
-            };
-
-            await _dbContext.Interests.AddAsync(interest, cancellationToken);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            var interest = await _interestRepository.CreateInterest(request.Name, cancellationToken);
 
             return interest.Name;
         }

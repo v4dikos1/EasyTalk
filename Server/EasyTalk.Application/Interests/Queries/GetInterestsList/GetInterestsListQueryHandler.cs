@@ -1,31 +1,26 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using EasyTalk.Application.Interfaces;
+using EasyTalk.Application.Interfaces.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace EasyTalk.Application.Interests.Queries.GetInterestsList
 {
     public class GetInterestsListQueryHandler : IRequestHandler<GetInterestsListQuery, InterestsListViewModel>
     {
-        private readonly IEasyTalkDbContext _dbContext;
+        private readonly IInterestRepository _interestRepository;
         private readonly IMapper _mapper;
 
-        public GetInterestsListQueryHandler(IEasyTalkDbContext dbContext, IMapper mapper)
+        public GetInterestsListQueryHandler(IInterestRepository interestRepository, IMapper mapper)
         {
-            this._dbContext = dbContext;
+            _interestRepository = interestRepository;
             _mapper = mapper;
         }
 
         public async Task<InterestsListViewModel> Handle(GetInterestsListQuery request, CancellationToken cancellationToken)
         {
-            var interestsList = await _dbContext.Interests
-                .Skip(request.Offset)
-                .Take(request.Limit)
-                .ProjectTo<InterestLookupDto>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+            var interestsList =
+                await _interestRepository.GetInterests(request.Limit, request.Offset, cancellationToken);
 
-            return new InterestsListViewModel { Interests = interestsList};
+            return new InterestsListViewModel { Interests = _mapper.Map<List<InterestLookupDto>>(interestsList)};
         }
     }
 }

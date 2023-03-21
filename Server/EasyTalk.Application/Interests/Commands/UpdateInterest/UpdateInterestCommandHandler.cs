@@ -1,5 +1,5 @@
 ﻿using EasyTalk.Application.Common.Exceptions;
-using EasyTalk.Application.Interfaces;
+using EasyTalk.Application.Interfaces.Repositories;
 using EasyTalks.Domain.Entities;
 using MediatR;
 
@@ -7,30 +7,26 @@ namespace EasyTalk.Application.Interests.Commands.UpdateInterest
 {
     public class UpdateInterestCommandHandler : IRequestHandler<UpdateInterestCommand>
     {
-        private readonly IEasyTalkDbContext _dbContext;
+        private readonly IInterestRepository _interestRepository;
 
-        public UpdateInterestCommandHandler(IEasyTalkDbContext dbContext)
+        public UpdateInterestCommandHandler(IInterestRepository interestRepository)
         {
-            this._dbContext = dbContext;
+            _interestRepository = interestRepository;
         }
 
         public async Task Handle(UpdateInterestCommand request, CancellationToken cancellationToken)
         {
-            if (await _dbContext.Interests.FindAsync(request.NewName.ToLower(), cancellationToken) != null)
+            if (await _interestRepository.GetInterest(request.NewName, cancellationToken) != null)
             {
                 throw new AlreadyExistsException(nameof(Interest), request.NewName);
             }
-            
-            var interestToUpdate = await _dbContext.Interests.FindAsync(request.Name.ToLower(), cancellationToken);
 
-            if (interestToUpdate == null)
+            var response = await _interestRepository.UpdateInterest(request.Name, request.NewName, cancellationToken);
+
+            if (response == false)
             {
                 throw new NotFoundException(nameof(Interest), request.Name);
             }
-
-            interestToUpdate.Name = request.NewName.ToLower();
-
-            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

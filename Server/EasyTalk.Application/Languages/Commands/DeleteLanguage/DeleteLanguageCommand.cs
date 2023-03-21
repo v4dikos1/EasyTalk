@@ -2,7 +2,7 @@
 
 namespace EasyTalk.Application.Languages.Commands.DeleteLanguage
 {
-    public class DeleteLanguageCommand : IRequest
+    public class DeleteLanguageCommand : IRequest<bool>
     {
         /// <summary>
         /// Код удаляемого языка
